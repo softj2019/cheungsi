@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="none-layout">
+<head>
+    <title>로그인</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+	<div class="wrap login-w">
+        <div class="login-in">
+            <h1><span>청시행 비치</span> 관리자페이지</h1>
+            <form action="" id="loginForm">
+                <div class="login-box">
+                    <table>
+                        <colgroup>
+                            <col style="width: 60px;">
+                            <col style="width: 188px;">
+                            <col style="width: 85px;">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td>아이디</td>
+                                <td><input type="text" class="input4" id="user_id" name="user_id"></td>
+                                <td rowspan="2"><button type="button" class="btn-black" id="loginBtn">LOGIN</button></td>
+                            </tr>
+                            <tr>
+                                <td>비밀번호</td>
+                                <td><input type="password" class="input4" name="password"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ck-box">
+                    <input type="checkbox" id="idSaveCheck"><label for="idSaveCheck" class="mr30">아이디 저장</label>
+                </div>
+            </form>
+        </div>
+  </div>
+<script type="text/javascript" th:src="'assets/js/'+${jsFileName}+'.js'"></script>
+</th:block>
+</body>
+</html>

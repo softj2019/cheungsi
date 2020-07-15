@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+    <header>
+        <div class="logo">청시행 비치</div>
+        <div class="nav">
+            <ul>
+                <li th:class="${navNo} == '1' ? 'nav-on' : ''"><a href="/index">서핑예약</a></li>
+                <li th:class="${navNo} == '2' ? 'nav-on' : ''"><a href="/reservation">분류관리</a></li>
+            </ul>
+        </div>
+    </header>
+</th:block>
+</html>

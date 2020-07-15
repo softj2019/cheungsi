@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.cheongsihaengbeach.mapper.CategoryMapper">
+    <select id="getCategorys" resultType="hashmap" parameterType="hashmap">
+    	SELECT  *
+		FROM category
+		where 1=1
+		<if test="category_upper_id != null and category_upper_id != ''">and category_upper_id = #{category_upper_id}</if>
+    </select>
+    <insert id="insertCategory" parameterType="hashmap">
+    	insert into category(
+    		category_name,
+    		category_upper_id
+    	)values(
+    		#{category_name},
+    		#{category_upper_id}
+    	)
+    </insert>
+    <delete id="deleteCategory" parameterType="hashmap">
+    	delete from category
+    	where category_id = #{category_id}
+    </delete>
+</mapper>

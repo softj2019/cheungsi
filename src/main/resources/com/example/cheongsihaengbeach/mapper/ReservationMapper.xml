@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.cheongsihaengbeach.mapper.ReservationMapper">
+	<resultMap id="reservationMap" type="hashmap">
+		<id column="res_id" property="res_id"/>
+		<result column="res_no" property="res_no"/>
+		<result column="res_date" property="res_date"/>
+		<result column="category_id" property="category_id"/>
+		<result column="res_name" property="res_name"/>
+		<result column="res_phone" property="res_phone"/>
+		<result column="res_quantity" property="res_quantity"/>
+		<result column="res_payment" property="res_payment"/>
+		<result column="res_pay_method" property="res_pay_method"/>
+		<result column="reg_date" property="reg_date"/>
+		<result column="res_checkin_yn" property="res_checkin_yn"/>
+		<result column="remark" property="remark"/>
+		
+		<collection column="res_no" property="res_options" select="getOptions"></collection>
+	</resultMap>
+	<select id="getReservationCount" parameterType="hashmap" resultType="int">
+		select count(*)
+		from reservation
+		where 1=1
+		<if test="res_name != null and res_name != ''">and res_name = #{res_name}</if>
+		<if test="reg_date != null and reg_date != ''">and date_format(reg_date,'%Y-%m-%d') = #{reg_date}</if>
+	</select>
+	<select id="getReservations" resultMap="reservationMap" parameterType="hashmap">
+		SELECT A.*,B.*,
+			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, B.category_name, (SELECT category_name FROM category WHERE category_id=B.category_upper_id)) AS category1,
+			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, NULL, B.category_name) AS category2
+		from reservation A
+		left JOIN category B
+		ON A.category_id = B.category_id
+		where 1=1
+		<if test="res_name != null and res_name != ''">and A.res_name = #{res_name}</if>
+		<if test="reg_date != null and reg_date != ''">and A.date_format(reg_date,'%Y-%m-%d') = #{reg_date}</if>
+		order by A.reg_date desc
+		limit ${rowStart-1}, ${displayRowCount}
+	</select>
+	<select id="getOptions" resultType="hashmap" parameterType="hashmap">
+		select *
+		from reservation_option
+		where res_no = #{res_no}
+	</select>
+    <insert id="insertReservation" parameterType="hashmap">
+    <![CDATA[
+    	insert into reservation(
+			res_date,
+			res_no,
+			category_id,
+			res_name,
+			res_phone,
+			res_quantity,
+			res_payment,
+			res_pay_method,
+			res_checkin_yn,
+			remark
+    	)values(
+    		#{res_date},
+    		#{res_no},
+			#{category_id},
+			#{res_name},
+			#{res_phone},
+			#{res_quantity},
+			#{res_payment},
+			#{res_pay_method},
+			#{res_checkin_yn},
+			#{remark}
+    	)
+   	]]>
+    </insert>
+    <insert id="insertReservationOption" parameterType="hashmap">
+    <![CDATA[
+    	insert into reservation_option(
+    		res_no,
+			option_name,
+			option_quantity,
+			option_payment,
+			option_pay_method,
+			option_hope_time,
+			option_use_yn
+    	)values(
+    		#{res_no},
+    		#{option_name},
+			#{option_quantity},
+			#{option_payment},
+			#{option_pay_method},
+			#{option_hope_time},
+			#{option_use_yn}
+    	)
+    ]]>
+    </insert>
+    <update id="updateReservationStats" parameterType="hashmap">
+    	update reservation set
+    		res_checkin_yn = #{res_checkin_yn}
+    	where res_id = #{res_id}
+    </update>
+    <update id="updateOptionStats" parameterType="hashmap">
+    	update reservation_option set
+    		option_use_yn = #{option_use_yn}
+    	where option_id = #{option_id}
+    </update>
+</mapper>

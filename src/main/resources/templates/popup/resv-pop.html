@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="none-layout">
+<head>
+    <title>예약등록</title>
+</head>
+<body class="white">
+<th:block layout:fragment="content">
+	<div class="wrap">
+	<form id="reservationForm">
+        <div class="mb20">
+            <h3 class="title">예약자정보</h3>
+            <table class="greyTable">
+                <colgroup>
+                    <col width="100px">
+                    <col width="*">
+                </colgroup>
+                <tr>
+                    <th>예약날짜</th>
+                    <td>
+                        <div class="date w145px">
+                            <input type="text" id="datetimepicker1" class="input2" name="res_date"> <!--20.07.13 수정-->
+                            <i class="cal1"></i>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>대분류</th>
+                    <td>
+	                    <select id="1depth" name="category1">
+	                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>중분류</th>
+                    <td>
+	                    <select id="2depth" name="category2">
+	                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td><input type="text" name="res_name"></td>
+                </tr>
+                <tr>
+                    <th>연락처</th>
+                    <td><input type="text" name="res_phone"></td>
+                </tr>
+                <tr>
+                    <th>수량</th>
+                    <td><input type="number" name="res_quantity"></td>
+                </tr>
+                <tr>
+                    <th>금액</th>
+                    <td><input type="number" name="res_payment"></td>
+                </tr>
+                <tr>
+                    <th>구매방법</th>
+                    <td>
+                        <input type="radio" value="네이버 강릉 서핑" name="res_pay_method" id="pay1" checked="checked"><label for="pay1">네이버 강릉 서핑</label>
+						<input type="radio" value="네이버 양양 서핑" name="res_pay_method" id="pay2"><label for="pay2">네이버 양양 서핑</label>
+						<input type="radio" value="네이버 게스트 하우스" name="res_pay_method" id="pay3"><label for="pay3">네이버 게스트 하우스</label><br>
+						<input type="radio" value="현금" name="res_pay_method" id="pay4"><label for="pay4">현금</label>
+						<input type="radio" value="카드" name="res_pay_method" id="pay5"><label for="pay5">카드</label>
+						<input type="radio" value="서비스" name="res_pay_method" id="pay6"><label for="pay6">서비스</label>
+						<input type="radio" value="현장결제 카드" name="res_pay_method" id="pay7"><label for="pay7">현장결제 카드</label>
+						<input type="radio" value="현장결제 현금" name="res_pay_method" id="pay8"><label for="pay8">현장결제 현금</label><br>
+						<input type="radio" value="custom" name="res_pay_method" id="pay9"><label for="pay9">직접입력</label><br>
+                        <input type="text" placeholder="직접 입력" name="res_pay_method_text" class="res_pay_method_text">
+                    </td>
+                </tr>
+                <tr>
+                    <th>입실여부</th>
+                    <td>
+	                    <select name="res_checkin_yn" id="room">
+	                        <option value="Y">입실</option>
+	                        <option value="N" selected="selected">미입실</option>
+	                    </select>
+                    </td>
+                </tr>
+                <!--20.07.13 추가 <tr>
+                    <th>강습시간</th>
+                    <td>
+                        <div class="date w145px">
+                            <input id="datetimepicker2" type="text" class="input2">
+                            <i class="cal1"></i>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>수강</th>
+                    <td><select name="2depth" id="3depth">
+                        <option value="완료">완료</option>
+                        <option value="미완료">미완료</option>
+                    </select></td>
+                </tr> -->
+            </table>
+        </div>
+        <div class="mb20">
+            <h3 class="title">추가옵션 <button type="button" class="btn-blue2 op-add">추가</button></h3>
+            <table class="greyTable v2">
+                <colgroup>
+                    <col width="15%">
+                    <col width="10%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="10%">
+                    <col width="5%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>분류</th>
+                        <th>수량</th>
+                        <th>금액</th>
+                        <th>구매방법</th>
+                        <th>강습시간</th>
+                        <th>수강</th>
+                        <th>삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select name="option_name" id="option_name">
+                                <option value="서핑강습" selected="selected">서핑강습</option>
+                                <option value="서핑렌탈">서핑렌탈</option>
+                                <option value="파티">파티</option>
+                                <option value="펍">펍</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="hastxt" name="option_quantity">개
+                        </td>
+                        <td>
+                            <input type="text" class="hastxt" name="option_payment">원
+                        </td>
+                        <td>
+                            <select name="option_pay_method" id="">
+                                <option value="네이버 강릉 서핑" selected="selected">네이버 강릉 서핑</option>
+								<option value="네이버 양양 서핑">네이버 양양 서핑</option>
+								<option value="네이버 게스트 하우스">네이버 게스트 하우스</option>
+								<option value="현금">현금</option>
+								<option value="카드">카드</option>
+								<option value="서비스">서비스</option>
+								<option value="현장결제 카드">현장결제 카드</option>
+								<option value="현장결제 현금">현장결제 현금</option>
+								<option value="custom">직접입력</option>
+                            </select>
+                            <div class="option_pay_method_text_div">
+	                            <input type="text" name="option_pay_method_text" placeholder="직접입력" class="option_pay_method_text">
+	                            <i class="arr-d"></i>
+	                        </div>
+                        </td>
+                        <td>
+                            <div class="date">
+	                            <input id="datetimepicker2" type="text" class="input2 datetimepicker2" name="option_hope_time">
+	                            <i class="cal1"></i>
+	                        </div>
+                        </td>
+                        <td>
+                            <select name="option_use_yn" id="">
+                                <option value="Y" >수강</option>
+                                <option value="N" selected="selected">미수강</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-red2 op-del">삭제</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mb20">
+            <h3 class="title">비고(메모)</h3>
+            <textarea name="remark" id="" class="memoTA"></textarea>
+        </div>
+        <div class="flexEnd">
+            <button type="button" class="btn-blue v2 mr5" id="res_save_btn">저장</button>
+            <button type="button" class="btn-white v2" onclick="self.close();">취소</button>
+        </div>
+    </form>
+    </div>
+<script type="text/javascript" th:src="'/assets/js/'+${jsFileName}+'.js'"></script>
+</th:block>
+</body>
+</html>

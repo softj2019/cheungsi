@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="_csrf" content="${_csrf.token}" />
+	<meta name="_csrf_header" content="${_csrf.headerName}" />
+    <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">청시행</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    
+    <!-- plugins start -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="/assets/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css"><!--20.07.13 추가-->
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/jquery.datetimepicker.full.min.js"></script>
+    <!-- plugins end -->
+    
+    <!-- CSS start -->
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/jquery.datetimepicker.css">
+    <!-- CSS end -->
+</head>
+<body>
+   	<!-- JS start -->
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/common.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript">
+	    window.addEventListener("load", function(){
+	    setTimeout(loaded, 100);
+	
+	    }, false);
+	
+	    function loaded(){
+	    window.scrollTo(0, 1);
+	    }
+	    
+	    function handleFirstTab(e) {
+	      if (e.keyCode === 9) {
+	        document.body.classList.add('user-is-tabbing');
+	
+	        window.removeEventListener('keydown', handleFirstTab);
+	        window.addEventListener('mousedown', handleMouseDownOnce);
+	      }
+	    }
+	
+	    function handleMouseDownOnce() {
+	      document.body.classList.remove('user-is-tabbing');
+	
+	      window.removeEventListener('mousedown', handleMouseDownOnce);
+	      window.addEventListener('keydown', handleFirstTab);
+	    }
+	
+	    window.addEventListener('keydown', handleFirstTab);
+	</script>
+	<!-- JS end -->
+	
+   	<!-- content start -->
+    <th:block layout:fragment="content"></th:block>
+    <!-- content end -->
+</body>
+</html>
