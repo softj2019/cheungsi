@@ -32,6 +32,11 @@ $(function(){
     		}
 		})
 	});
+	
+	//tr선택시 상세창
+	$(document).on('click','tr.reservation_tr',function(){
+		reservationPopup($(this).attr("data-id"));
+    });
     /******************************************* listener end *******************************************/
 	$.datetimepicker.setLocale('kr');
     $('.date_pick').datetimepicker({
@@ -52,7 +57,7 @@ function loadReservationTable() {
 				var optionLen = el.res_options.length ? el.res_options.length : 1;
 				var option = el.res_options;
 
-				html += '<tr>' +
+				html += '<tr class="reservation_tr" data-id="'+el.res_id+'">' +
 				            '<td>'+el.category1+'</td>' +
 				            '<td>'+el.category2+'</td>' +
 				            '<td>' +

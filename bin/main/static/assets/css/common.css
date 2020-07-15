@@ -506,6 +506,15 @@ input[type=checkbox]:checked+label::before{
     right: 0;
     top: 0;
 }
+.date i.arr-d{
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(../img/arr-d.png)no-repeat center / 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
 .btn-w {
     width: 60px;
     height: 30px;
@@ -719,4 +728,10 @@ button.v2{
     font-weight: 600;
     color: #fff;
     background: #06B7E3;
+}
+tr.reservation_tr:hover {
+	 background-color: lightyellow; 
+}
+.hide{
+	display: none;
 }

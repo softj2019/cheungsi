@@ -22,8 +22,16 @@ public class MainController {
 	CategoryMapper categoryMapper;
 
 	//로그인페이지
-	@RequestMapping("/login")
+	@RequestMapping("/")
 	public String main(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model) {
+		
+		model.addAttribute("jsFileName","login");
+		return "redirect:/login";
+	}
+	
+	//로그인페이지
+	@RequestMapping("/login")
+	public String login(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model) {
 		
 		model.addAttribute("jsFileName","login");
 		return "login";
@@ -32,6 +40,9 @@ public class MainController {
 	//서핑예약탭
 	@RequestMapping("/index")
 	public String index(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model) {
+		if(sess.getAttribute("loginId") == null) {
+			return "redirect:/login";
+		}
 		
 		model.addAttribute("navNo","1");
 		model.addAttribute("jsFileName","index");
@@ -41,6 +52,10 @@ public class MainController {
 	//분류관리탭
 	@RequestMapping("/reservation")
 	public String reservation(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess, ModelMap model) {
+		if(sess.getAttribute("loginId") == null) {
+			return "redirect:/login";
+		}
+		
 		params.put("category_upper_id",'0');
 		List<Map<String,Object>> category1List = categoryMapper.getCategorys(params);
         params.put("category_upper_id",null);

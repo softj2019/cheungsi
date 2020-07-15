@@ -26,7 +26,9 @@ public class SecurityController {
 		Map<String,Object> result = new HashMap<>();
 		
 		securityService.findUserForId(params, result);
-		
+		if(result.get("data").equals("success")) {
+			sess.setAttribute("loginId", params.get("user_id"));
+		}
 		return result;
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cheongsihaengbeach.domain.ReservationVO;
+import com.example.cheongsihaengbeach.mapper.ReservationMapper;
 import com.example.cheongsihaengbeach.service.RestApiService;
 
 @RestController
@@ -21,6 +22,8 @@ import com.example.cheongsihaengbeach.service.RestApiService;
 public class RestApiController {
 	@Autowired
 	private RestApiService restApiService;
+	@Autowired
+	private ReservationMapper reservationMapper;
 
 	//카테고리
 	@RequestMapping("/getCategorys")
@@ -47,6 +50,16 @@ public class RestApiController {
 			params.put("option_use_yns",reservationVO.getOption_use_yn());
 		}
 		restApiService.insertReservation(params, result);
+		
+		return result;
+	}
+	
+	//예약삭제
+	@RequestMapping("/deleteReservation")
+	public Map<String, Object> deleteReservation(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model) {
+		Map<String,Object> result = new HashMap<>();
+		
+		restApiService.deleteReservation(params, result);
 		
 		return result;
 	}
@@ -102,6 +115,16 @@ public class RestApiController {
 		Map<String,Object> result = new HashMap<>();
 		
 		restApiService.updateOptionStats(params, result);
+		
+		return result;
+	}
+	
+	//예약선택
+	@RequestMapping("/getReservationDetail")
+	public Map<String, Object> getReservationDetail(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model,ReservationVO reservationVO) {
+		Map<String,Object> result = new HashMap<>();
+
+		result.put("detail",reservationMapper.getReservationDetail(params));
 		
 		return result;
 	}

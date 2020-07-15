@@ -36,6 +36,9 @@ public class RestApiService {
         TransactionStatus status = txManager.getTransaction(def);
         
 		try {
+			if(params.get("res_id") != null && !params.get("res_id").equals("")) {
+				reservationMapper.deleteReservationOption(params);
+			}
 			String res_no = "RES-"+NumberGender.numberGen(10, 1);
 			params.put("res_no",res_no);
 			if(params.get("res_pay_method").equals("custom")) {
@@ -77,6 +80,12 @@ public class RestApiService {
 			e.printStackTrace();
 			txManager.rollback(status);
 		}
+	}
+	
+	public void deleteReservation(Map<String,Object> params, Map<String,Object> result) {
+		reservationMapper.deleteReservation(params);
+		
+		result.put("msg", "success");
 	}
 	
 	public void insertCategory(Map<String,Object> params, Map<String,Object> result) {

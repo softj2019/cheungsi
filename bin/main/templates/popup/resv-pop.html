@@ -9,6 +9,8 @@
 <th:block layout:fragment="content">
 	<div class="wrap">
 	<form id="reservationForm">
+	<input type="hidden" name="res_id"/>
+	<input type="hidden" name="res_no"/>
         <div class="mb20">
             <h3 class="title">예약자정보</h3>
             <table class="greyTable">
@@ -67,7 +69,7 @@
 						<input type="radio" value="현장결제 카드" name="res_pay_method" id="pay7"><label for="pay7">현장결제 카드</label>
 						<input type="radio" value="현장결제 현금" name="res_pay_method" id="pay8"><label for="pay8">현장결제 현금</label><br>
 						<input type="radio" value="custom" name="res_pay_method" id="pay9"><label for="pay9">직접입력</label><br>
-                        <input type="text" placeholder="직접 입력" name="res_pay_method_text" class="res_pay_method_text">
+                        <input type="text" placeholder="직접 입력" name="res_pay_method_text" class="res_pay_method_text hide">
                     </td>
                 </tr>
                 <tr>
@@ -120,7 +122,7 @@
                         <th>삭제</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="option_table">
                     <tr>
                         <td>
                             <select name="option_name" id="option_name">
@@ -148,7 +150,7 @@
 								<option value="현장결제 현금">현장결제 현금</option>
 								<option value="custom">직접입력</option>
                             </select>
-                            <div class="option_pay_method_text_div">
+                            <div class="date option_pay_method_text_div hide">
 	                            <input type="text" name="option_pay_method_text" placeholder="직접입력" class="option_pay_method_text">
 	                            <i class="arr-d"></i>
 	                        </div>
@@ -178,6 +180,7 @@
         </div>
         <div class="flexEnd">
             <button type="button" class="btn-blue v2 mr5" id="res_save_btn">저장</button>
+            <button type="button" class="btn-white v2 mr5" id="res_del_btn">삭제</button>
             <button type="button" class="btn-white v2" onclick="self.close();">취소</button>
         </div>
     </form>

@@ -15,12 +15,12 @@ function postCallAjax(url, data, success){
 }
 
 //예약등록팝업
-function reservationPopup(){
+function reservationPopup(res_id){
     if(reservationChild != undefined){
     	reservationChild.close()
     }
 
-    reservationChild = window.open('/popup/resv-pop','_blank','width=700, height=950, toolbar=no, menubar=no, scrollbars=yes, resizable=yes');
+    reservationChild = window.open('/popup/resv-pop?res_id='+(res_id ? res_id : ''),'_blank','width=700, height=950, toolbar=no, menubar=no, scrollbars=yes, resizable=yes');
 }
 
 //날짜포맷

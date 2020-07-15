@@ -76,6 +76,3 @@ button{
     overflow:visible;
     white-space: nowrap;
 }
-.res_pay_method_text, .option_pay_method_text_div{
-	display: none;
-}

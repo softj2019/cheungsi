@@ -21,10 +21,10 @@
 	</resultMap>
 	<select id="getReservationCount" parameterType="hashmap" resultType="int">
 		select count(*)
-		from reservation
+		from reservation A
 		where 1=1
-		<if test="res_name != null and res_name != ''">and res_name = #{res_name}</if>
-		<if test="reg_date != null and reg_date != ''">and date_format(reg_date,'%Y-%m-%d') = #{reg_date}</if>
+		<if test="res_name != null and res_name != ''">and A.res_name like concat('%',#{res_name},'%')</if>
+		<if test="reg_date != null and reg_date != ''">and A.date_format(reg_date,'%Y-%m-%d') = #{reg_date}</if>
 	</select>
 	<select id="getReservations" resultMap="reservationMap" parameterType="hashmap">
 		SELECT A.*,B.*,
@@ -34,7 +34,7 @@
 		left JOIN category B
 		ON A.category_id = B.category_id
 		where 1=1
-		<if test="res_name != null and res_name != ''">and A.res_name = #{res_name}</if>
+		<if test="res_name != null and res_name != ''">and A.res_name like concat('%',#{res_name},'%')</if>
 		<if test="reg_date != null and reg_date != ''">and A.date_format(reg_date,'%Y-%m-%d') = #{reg_date}</if>
 		order by A.reg_date desc
 		limit ${rowStart-1}, ${displayRowCount}
@@ -44,9 +44,21 @@
 		from reservation_option
 		where res_no = #{res_no}
 	</select>
+	<select id="getReservationDetail" resultMap="reservationMap" parameterType="hashmap">
+		SELECT A.*,B.*,
+			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, B.category_id, (SELECT category_id FROM category WHERE category_id=B.category_upper_id)) AS category1,
+			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, NULL, B.category_id) AS category2
+		from reservation A
+		left JOIN category B
+		ON A.category_id = B.category_id
+		where res_id=#{res_id}
+	</select>
     <insert id="insertReservation" parameterType="hashmap">
     <![CDATA[
     	insert into reservation(
+   	]]>
+   	<if test="res_id != null and res_id !=''">res_id,</if>
+   	<![CDATA[
 			res_date,
 			res_no,
 			category_id,
@@ -58,6 +70,9 @@
 			res_checkin_yn,
 			remark
     	)values(
+   	]]>
+   	<if test="res_id != null and res_id !=''">#{res_id},</if>
+   	<![CDATA[
     		#{res_date},
     		#{res_no},
 			#{category_id},
@@ -69,11 +84,27 @@
 			#{res_checkin_yn},
 			#{remark}
     	)
+    	on duplicate KEY update
+    	
+    	res_id = #{res_id},
+		res_date = #{res_date},
+		res_no = #{res_no},
+		category_id = #{category_id},
+		res_name = #{res_name},
+		res_phone = #{res_phone},
+		res_quantity = #{res_quantity},
+		res_payment = #{res_payment},
+		res_pay_method = #{res_pay_method},
+		res_checkin_yn = #{res_checkin_yn},
+		remark = #{remark}
    	]]>
     </insert>
     <insert id="insertReservationOption" parameterType="hashmap">
     <![CDATA[
     	insert into reservation_option(
+   	]]>
+   	<if test="option_id != null and option_id !=''">option_id,</if>
+   	<![CDATA[
     		res_no,
 			option_name,
 			option_quantity,
@@ -82,6 +113,9 @@
 			option_hope_time,
 			option_use_yn
     	)values(
+   	]]>
+   	<if test="option_id != null and option_id !=''">#{option_id},</if>
+   	<![CDATA[
     		#{res_no},
     		#{option_name},
 			#{option_quantity},
@@ -90,6 +124,16 @@
 			#{option_hope_time},
 			#{option_use_yn}
     	)
+    	on duplicate KEY update
+    	
+    	option_id = #{option_id},
+    	res_no = #{res_no},
+		option_name = #{option_name},
+		option_quantity = #{option_quantity},
+		option_payment = #{option_payment},
+		option_pay_method = #{option_pay_method},
+		option_hope_time = #{option_hope_time},
+		option_use_yn = #{option_use_yn}
     ]]>
     </insert>
     <update id="updateReservationStats" parameterType="hashmap">
@@ -102,4 +146,12 @@
     		option_use_yn = #{option_use_yn}
     	where option_id = #{option_id}
     </update>
+    <delete id="deleteReservation" parameterType="hashmap">
+    	delete from reservation
+    	where res_id = #{res_id}
+    </delete>
+    <delete id="deleteReservationOption" parameterType="hashmap">
+    	delete from reservation_option
+    	where res_no = #{res_no}
+    </delete>
 </mapper>
