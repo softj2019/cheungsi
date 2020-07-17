@@ -24,7 +24,7 @@
 		from reservation A
 		where 1=1
 		<if test="res_name != null and res_name != ''">and A.res_name like concat('%',#{res_name},'%')</if>
-		<if test="reg_date != null and reg_date != ''">and A.date_format(reg_date,'%Y-%m-%d') = #{reg_date}</if>
+		<if test="res_date != null and res_date != ''">and date_format(A.res_date,'%Y-%m-%d') = #{res_date}</if>
 	</select>
 	<select id="getReservations" resultMap="reservationMap" parameterType="hashmap">
 		SELECT A.*,B.*,
@@ -35,8 +35,8 @@
 		ON A.category_id = B.category_id
 		where 1=1
 		<if test="res_name != null and res_name != ''">and A.res_name like concat('%',#{res_name},'%')</if>
-		<if test="reg_date != null and reg_date != ''">and A.date_format(reg_date,'%Y-%m-%d') = #{reg_date}</if>
-		order by A.reg_date desc
+		<if test="res_date != null and res_date != ''">and date_format(A.res_date,'%Y-%m-%d') = #{res_date}</if>
+		order by A.res_date desc
 		limit ${rowStart-1}, ${displayRowCount}
 	</select>
 	<select id="getOptions" resultType="hashmap" parameterType="hashmap">
@@ -111,7 +111,8 @@
 			option_payment,
 			option_pay_method,
 			option_hope_time,
-			option_use_yn
+			option_use_yn,
+			option_additional
     	)values(
    	]]>
    	<if test="option_id != null and option_id !=''">#{option_id},</if>
@@ -122,7 +123,8 @@
 			#{option_payment},
 			#{option_pay_method},
 			#{option_hope_time},
-			#{option_use_yn}
+			#{option_use_yn},
+			#{option_additional}
     	)
     	on duplicate KEY update
     	
@@ -133,7 +135,8 @@
 		option_payment = #{option_payment},
 		option_pay_method = #{option_pay_method},
 		option_hope_time = #{option_hope_time},
-		option_use_yn = #{option_use_yn}
+		option_use_yn = #{option_use_yn},
+		option_additional = #{option_additional}
     ]]>
     </insert>
     <update id="updateReservationStats" parameterType="hashmap">

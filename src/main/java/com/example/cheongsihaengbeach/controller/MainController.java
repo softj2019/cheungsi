@@ -38,13 +38,25 @@ public class MainController {
 	}
 	
 	//서핑예약탭
+	@RequestMapping("/dashboard")
+	public String dashboard(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model) {
+		if(sess.getAttribute("loginId") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("categorys", categoryMapper.getDefaultCategorys());
+		model.addAttribute("navNo","1");
+		model.addAttribute("jsFileName","dashboard");
+		return "dashboard/dashboard";
+	}
+	
+	//예약자검색탭
 	@RequestMapping("/index")
 	public String index(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model) {
 		if(sess.getAttribute("loginId") == null) {
 			return "redirect:/login";
 		}
 		
-		model.addAttribute("navNo","1");
+		model.addAttribute("navNo","2");
 		model.addAttribute("jsFileName","index");
 		return "dashboard/index";
 	}
@@ -64,7 +76,7 @@ public class MainController {
 		model.addAttribute("category1List",category1List);
 		model.addAttribute("category2List",category2List);
 		
-		model.addAttribute("navNo","2");
+		model.addAttribute("navNo","3");
 		model.addAttribute("jsFileName","reservation");
 		return "dashboard/reservation";
 	}

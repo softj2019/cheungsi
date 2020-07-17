@@ -12,14 +12,25 @@
     <insert id="insertCategory" parameterType="hashmap">
     	insert into category(
     		category_name,
-    		category_upper_id
+    		category_upper_id,
+    		category_max_quantity
     	)values(
     		#{category_name},
-    		#{category_upper_id}
+    		#{category_upper_id},
+    		#{category_max_quantity}
     	)
     </insert>
     <delete id="deleteCategory" parameterType="hashmap">
     	delete from category
     	where category_id = #{category_id}
     </delete>
+    <select id="getDefaultCategorys" resultType="hashmap">
+    <![CDATA[
+	    SELECT *,
+				(select category_name FROM category WHERE category_id = A.category_upper_id) AS category_upper_name
+		FROM category A
+		WHERE A.category_upper_id != 0
+		order by category_id asc
+	]]>
+    </select>
 </mapper>

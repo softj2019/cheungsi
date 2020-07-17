@@ -2,7 +2,7 @@ $(function(){
 	$("#category_add_btn").show();
     $("#category_del_btn").hide();
     $("input[name=category_name]").show();
-	
+    $("input[name=category_max_quantity]").hide();
 	/******************************************* listener start *******************************************/
 	$('.category-out > li > a').click(function(e){
         e.preventDefault();
@@ -17,6 +17,7 @@ $(function(){
         $("#category_add_btn").show();
         $("#category_del_btn").show();
         $("input[name=category_name]").show();
+        $("input[name=category_max_quantity]").show();
     });
     $('.category-out > li > ul > li').click(function(){
         $('.category-out > li > ul > li').removeClass('active');
@@ -31,21 +32,25 @@ $(function(){
         $("#category_add_btn").hide();
         $("#category_del_btn").show();
         $("input[name=category_name]").hide();
+        $("input[name=category_max_quantity]").hide();
     });
     $("select[name=category_id]").change(function(){
     	if($(this).val() == '0'){
     		$("#category_add_btn").show();
     	    $("#category_del_btn").hide();
     	    $("input[name=category_name]").show();
+    	    $("input[name=category_max_quantity]").hide();
     	}else{
     		if($(this).attr("upper-id") == '0'){
 	    		$("#category_add_btn").show();
 	    	    $("#category_del_btn").show();
 	    	    $("input[name=category_name]").show();
+	    	    $("input[name=category_max_quantity]").show();
     		}else{
     			$("#category_add_btn").hide();
 	    	    $("#category_del_btn").show();
 	    	    $("input[name=category_name]").hide();
+	    	    $("input[name=category_max_quantity]").hide();
     		}
     	}
     });
@@ -67,6 +72,7 @@ function addCategory(){
 	var formData = {
 		category_name: $("input[name=category_name]").val(),
 		category_upper_id: $("select[name=category_id]").val(),
+		category_max_quantity: $("input[name=category_max_quantity]").val(),
 	}
 	postCallAjax('/api/insertCategory', formData, function(data){
 		location.reload();

@@ -15,7 +15,7 @@
                 	<li th:each="category1: ${category1List}">
                 		<a href="" th:value="${category1.category_id}" th:text="${category1.category_name}" th:attr="upper-id=${category1.category_upper_id}"></a>
                 		<ul th:each="category2: ${category2List}">
-                            <li th:if="${category1.category_id == category2.category_upper_id}" th:value="${category2.category_id}" th:text="${category2.category_name}" th:attr="upper-id=${category2.category_upper_id}"></li>
+                            <li th:if="${category1.category_id == category2.category_upper_id}" th:value="${category2.category_id}" th:text="${category2.category_name+' ['+category2.category_max_quantity+'인]'}" th:attr="upper-id=${category2.category_upper_id}"></li>
                         </ul>
                 	</li>
                 </ul>
@@ -25,7 +25,8 @@
                     <select name="category_id" id="">
                         <option value="0">최상위분류</option>
                     </select>
-                    <input type="text" class="input3" name="category_name">
+                    <input type="text" class="input3" name="category_name" placeholder="분류명">
+                    <input type="text" class="input3" name="category_max_quantity" placeholder="최대인원">
                     <button type="button" class="btn-blue" id="category_add_btn" onclick="addCategory()">추가</button>
                     <button type="button" class="btn-red" id="category_del_btn" onclick="delCategory()">삭제</button>
                 </div>

@@ -8,69 +8,100 @@ $(function(){
 	if(res_id) loadDetail(res_id);
 	/******************************************* listener start *******************************************/
 	$('.op-add').click(function(){
-        var tr = ''+ 
-        '<tr>' +
-	        '<td>' +
-	            '<select name="option_name" id="option_name">' +
-	                '<option value="서핑강습" selected="selected">서핑강습</option>' +
-	                '<option value="서핑렌탈">서핑렌탈</option>' +
-	                '<option value="파티">파티</option>' +
-	                '<option value="펍">펍</option>' +
-	            '</select>' +
-	        '</td>' +
-	        '<td>' +
-	            '<input type="text" class="hastxt" name="option_quantity">개' +
-	        '</td>' +
-	        '<td>' +
-	            '<input type="text" class="hastxt" name="option_payment">원' +
-	        '</td>' +
-	        '<td>' +
-	            '<select name="option_pay_method" id="">' +
-	                '<option value="네이버 강릉 서핑" selected="selected">네이버 강릉 서핑</option>' +
-	                '<option value="네이버 양양 서핑">네이버 양양 서핑</option>' +
-	                '<option value="네이버 게스트 하우스">네이버 게스트 하우스</option>' +
-	                '<option value="현금">현금</option>' +
-	                '<option value="카드">카드</option>' +
-	                '<option value="서비스">서비스</option>' +
-	                '<option value="현장결제 카드">현장결제 카드</option>' +
-	                '<option value="현장결제 현금">현장결제 현금</option>' +
-	                '<option value="custom">직접입력</option>' +
-	            '</select>' +
-	            '<div class="date option_pay_method_text_div hide">' +
-	                '<input type="text" name="option_pay_method_text" placeholder="직접입력" class="option_pay_method_text">' +
-	                '<i class="arr-d"></i>' +
-	            '</div>' +
-	        '</td>' +
-	        '<td>' +
-	            '<div class="date">' +
-	                '<input id="datetimepicker2" type="text" class="input2 datetimepicker2" name="option_hope_time">' +
-	                '<i class="cal1"></i>' +
-	            '</div>' +
-	        '</td>' +
-	        '<td>' +
-	            '<select name="option_use_yn" id="">' +
-	                '<option value="Y" >수강</option>' +
-	                '<option value="N" selected="selected">미수강</option>' +
-	            '</select>' +
-	        '</td>' +
-	        '<td>' +
-	            '<button type="button" class="btn-red2 op-del">삭제</button>' +
-	        '</td>' +
-	    '</tr>';
+		if($("tr.option_tr").length == 4) return;
+        var tr = '<tr class="option_tr">' +
+			        '<td>' +
+			            '<select name="option_name" id="option_name">' +
+			                '<option value="서핑강습" selected="selected">서핑강습</option>' +
+			                '<option value="서핑렌탈">서핑렌탈</option>' +
+			                '<option value="파티">파티</option>' +
+			                '<option value="펍">펍</option>' +
+			            '</select>' +
+			        '</td>' +
+			        '<td class="option_additional">' +
+			            '<select name="option_hope_time" id="option_hope_time">' +
+			                '<option value="today10">오전10시</option>' +
+			                '<option value="today11">오전11시</option>' +
+			                '<option value="today12">오후12시</option>' +
+			                '<option value="today13">오후01시</option>' +
+			                '<option value="today14">오후02시</option>' +
+			                '<option value="today15">오후03시</option>' +
+			                '<option value="today16">오후04시</option>' +
+			                '<option value="tomorrow10">익일 오전10시</option>' +
+			                '<option value="tomorrow11">익일 오전11시</option>' +
+			                '<option value="tomorrow12">익일 오후12시</option>' +
+			                '<option value="tomorrow13">익일 오후01시</option>' +
+			                '<option value="tomorrow14">익일 오후02시</option>' +
+			                '<option value="tomorrow15">익일 오후03시</option>' +
+			                '<option value="tomorrow16">익일 오후04시</option>' +
+			            '</select>' +
+			        '</td>' +
+			        '<td>' +
+			            '<input type="text" class="hastxt" name="option_quantity">개' +
+			        '</td>' +
+			        '<td>' +
+			            '<input type="text" class="hastxt" name="option_payment">원' +
+			            '<input type="hidden" name="option_use_yn" value="N">' +
+			        '</td>' +
+			        '<td>' +
+			            '<button type="button" class="btn-red2 op-del">삭제</button>' +
+			        '</td>' +
+			    '</tr>';
         $(tr).appendTo('.greyTable.v2 tbody');
         $('.datetimepicker2').datetimepicker({
     		format:'Y-m-d H:i',
     	});
     })
+    //옵션삭제
     $(document).on('click', '.op-del', function(){
         $(this).parents('tr').remove();
     })
-
-    $(function() { 
-		$('.ck-cu').click(function(){
-		    $(this).toggleClass('c-active')
-		});              
-    });
+    //옵션선택 서브셀렉트변경
+    $(document).on('change', 'select[name=option_name]', function(){
+        var value = $(this).val();
+    	var html = '';
+        
+    	switch(value){
+    	case '서핑강습':
+    		html += '<select name="option_hope_time" id="option_hope_time">' +
+    			        '<option value="today10">오전10시</option>' +
+    			        '<option value="today11">오전11시</option>' +
+    			        '<option value="today12">오후12시</option>' +
+    			        '<option value="today13">오후1시</option>' +
+    			        '<option value="today14">오후2시</option>' +
+    			        '<option value="today15">오후3시</option>' +
+    			        '<option value="today16">오후4시</option>' +
+    			        '<option value="tomorrow10">익일 오전10시</option>' +
+    			        '<option value="tomorrow11">익일 오전11시</option>' +
+    			        '<option value="tomorrow12">익일 오후12시</option>' +
+    			        '<option value="tomorrow13">익일 오후1시</option>' +
+    			        '<option value="tomorrow14">익일 오후2시</option>' +
+    			        '<option value="tomorrow15">익일 오후3시</option>' +
+    			        '<option value="tomorrow16">익일 오후4시</option>' +
+    			    '</select>';
+    		break;
+    	case '서핑렌탈':
+    		html += '<select name="option_hope_time" id="option_hope_time">' +
+    			        '<option value="보드/슈트">보드/슈트</option>' +
+    			        '<option value="보드">보드</option>' +
+    			        '<option value="슈트">슈트</option>' +
+    			    '</select>';
+    		break;
+    	case '파티':
+    		html += '<select name="option_hope_time" id="option_hope_time">' +
+    			        '<option value="바베큐파티">바베큐파티</option>' +
+    			        '<option value="바베큐안함">바베큐안함</option>' +
+    			    '</select>';
+    		break;
+    	case '펍':
+    		html += '<select name="option_hope_time" id="option_hope_time">' +
+    			        '<option value="펍파티">펍파티</option>' +
+    			        '<option value="펍안함">펍안함</option>' +
+    			    '</select>';
+    		break;
+    	}
+    	$(this).parents('td').siblings('td.option_additional').html(html);
+    })
     
     $.datetimepicker.setLocale('kr');//20.07.13 추가~
     $('#datetimepicker1').datetimepicker({
@@ -83,6 +114,8 @@ $(function(){
     
     //예약저장버튼
     $("#res_save_btn").click(function(){
+    	if(validateCheck()) return;
+    	
     	var formData = $("#reservationForm").serialize();
     	
     	postCallAjax('/api/insertReservation', formData, function(data){
@@ -129,7 +162,7 @@ $(function(){
     	}
     });
     
-    //셀렉트박스 직접입력선택
+    /*//셀렉트박스 직접입력선택
     $(document).on('change',"select[name=option_pay_method]",function(){
     	var value = $(this).val();
     	if(value == 'custom'){
@@ -148,7 +181,7 @@ $(function(){
     	$(this).parent().siblings("select[name=option_pay_method]").val('네이버 강릉 서핑');
     	$(this).parent().siblings("select[name=option_pay_method]").show();
 		$(this).parent().hide();
-    });
+    });*/
     /******************************************* listener end *******************************************/
     
 });
@@ -213,52 +246,56 @@ function loadDetail(res_id){
 		var options = detail.res_options;
 		var html = '';
 		options.forEach(function(el){
-			var option_pay_method_html = '';
-			if(el.option_pay_method != '네이버 강릉 서핑' &&
-			   el.option_pay_method != '네이버 양양 서핑' &&
-			   el.option_pay_method != '네이버 게스트 하우스' &&
-			   el.option_pay_method != '현금' &&
-			   el.option_pay_method != '카드' &&
-			   el.option_pay_method != '서비스' &&
-			   el.option_pay_method != '현장결제 카드' &&
-			   el.option_pay_method != '현장결제 현금'){
-				option_pay_method_html += '' +
-				'<select name="option_pay_method" id="" class="hide">' +
-		            '<option value="네이버 강릉 서핑" selected="selected">네이버 강릉 서핑</option>' +
-		            '<option value="네이버 양양 서핑">네이버 양양 서핑</option>' +
-		            '<option value="네이버 게스트 하우스">네이버 게스트 하우스</option>' +
-		            '<option value="현금">현금</option>' +
-		            '<option value="카드">카드</option>' +
-		            '<option value="서비스">서비스</option>' +
-		            '<option value="현장결제 카드">현장결제 카드</option>' +
-		            '<option value="현장결제 현금">현장결제 현금</option>' +
-		            '<option value="custom">직접입력</option>' +
-		        '</select>' +
-		        '<div class="date option_pay_method_text_div">' +
-		            '<input type="text" name="option_pay_method_text" placeholder="직접입력" class="option_pay_method_text" value="' + el.option_pay_method + '">' +
-		            '<i class="arr-d"></i>' +
-		        '</div>';
-			}else{
-				option_pay_method_html += '' +
-				'<select name="option_pay_method" id="">' +
-		            '<option value="네이버 강릉 서핑" ' + (el.option_pay_method == '네이버 강릉 서핑' ? 'selected="selected"' : '') + '>네이버 강릉 서핑</option>' +
-		            '<option value="네이버 양양 서핑" ' + (el.option_pay_method == '네이버 양양 서핑' ? 'selected="selected"' : '') + '>네이버 양양 서핑</option>' +
-		            '<option value="네이버 게스트 하우스" ' + (el.option_pay_method == '네이버 게스트 하우스' ? 'selected="selected"' : '') + '>네이버 게스트 하우스</option>' +
-		            '<option value="현금" ' + (el.option_pay_method == '현금' ? 'selected="selected"' : '') + '>현금</option>' +
-		            '<option value="카드" ' + (el.option_pay_method == '카드' ? 'selected="selected"' : '') + '>카드</option>' +
-		            '<option value="서비스" ' + (el.option_pay_method == '서비스' ? 'selected="selected"' : '') + '>서비스</option>' +
-		            '<option value="현장결제 카드" ' + (el.option_pay_method == '현장결제 카드' ? 'selected="selected"' : '') + '>현장결제 카드</option>' +
-		            '<option value="현장결제 현금" ' + (el.option_pay_method == '현장결제 현금' ? 'selected="selected"' : '') + '>현장결제 현금</option>' +
-		            '<option value="custom">직접입력</option>' +
-		        '</select>' +
-		        '<div class="date option_pay_method_text_div hide">' +
-		            '<input type="text" name="option_pay_method_text" placeholder="직접입력" class="option_pay_method_text">' +
-		            '<i class="arr-d"></i>' +
-		        '</div>';
+			var option_additional_html = '';
+			switch(el.option_name){
+			case '서핑강습':
+				var class_time = '';
+				if(new Date(el.option_hope_time).format("yyyyMMdd") == new Date(detail.res_date).format("yyyyMMdd")){
+					class_time = new Date(el.option_hope_time).format("a/phh시")
+				}else{
+					class_time = new Date(el.option_hope_time).format("익일 a/phh시")
+				}
+				console.log(class_time);
+				option_additional_html += '<select name="option_hope_time" id="option_hope_time">' +
+	    			        '<option value="today10" ' + (class_time == '오전10시' ? 'selected="selected"' : '') + '>오전10시</option>' +
+	    			        '<option value="today11" ' + (class_time == '오전11시' ? 'selected="selected"' : '') + '>오전11시</option>' +
+	    			        '<option value="today12" ' + (class_time == '오후12시' ? 'selected="selected"' : '') + '>오후12시</option>' +
+	    			        '<option value="today13" ' + (class_time == '오후01시' ? 'selected="selected"' : '') + '>오후01시</option>' +
+	    			        '<option value="today14" ' + (class_time == '오후02시' ? 'selected="selected"' : '') + '>오후02시</option>' +
+	    			        '<option value="today15" ' + (class_time == '오후03시' ? 'selected="selected"' : '') + '>오후03시</option>' +
+	    			        '<option value="today16" ' + (class_time == '오후04시' ? 'selected="selected"' : '') + '>오후04시</option>' +
+	    			        '<option value="tomorrow10" ' + (class_time == '익일 오전10시' ? 'selected="selected"' : '') + '>익일 오전10시</option>' +
+	    			        '<option value="tomorrow11" ' + (class_time == '익일 오전11시' ? 'selected="selected"' : '') + '>익일 오전11시</option>' +
+	    			        '<option value="tomorrow12" ' + (class_time == '익일 오후12시' ? 'selected="selected"' : '') + '>익일 오후12시</option>' +
+	    			        '<option value="tomorrow13" ' + (class_time == '익일 오후01시' ? 'selected="selected"' : '') + '>익일 오후01시</option>' +
+	    			        '<option value="tomorrow14" ' + (class_time == '익일 오후02시' ? 'selected="selected"' : '') + '>익일 오후02시</option>' +
+	    			        '<option value="tomorrow15" ' + (class_time == '익일 오후03시' ? 'selected="selected"' : '') + '>익일 오후03시</option>' +
+	    			        '<option value="tomorrow16" ' + (class_time == '익일 오후04시' ? 'selected="selected"' : '') + '>익일 오후04시</option>' +
+	    			    '</select>';
+	    		break;
+	    	case '서핑렌탈':
+	    		option_additional_html += '<select name="option_hope_time" id="option_hope_time">' +
+	    			        '<option value="보드/슈트" ' + (el.option_additional == '보드/슈트' ? 'selected="selected"' : '') + '>보드/슈트</option>' +
+	    			        '<option value="보드" ' + (el.option_additional == '보드' ? 'selected="selected"' : '') + '>보드</option>' +
+	    			        '<option value="슈트" ' + (el.option_additional == '슈트' ? 'selected="selected"' : '') + '>슈트</option>' +
+	    			    '</select>';
+	    		break;
+	    	case '파티':
+	    		option_additional_html += '<select name="option_hope_time" id="option_hope_time">' +
+	    			        '<option value="바베큐파티" ' + (el.option_additional == '바베큐파티' ? 'selected="selected"' : '') + '>바베큐파티</option>' +
+	    			        '<option value="바베큐안함" ' + (el.option_additional == '바베큐안함' ? 'selected="selected"' : '') + '>바베큐안함</option>' +
+	    			    '</select>';
+	    		break;
+	    	case '펍':
+	    		option_additional_html += '<select name="option_hope_time" id="option_hope_time">' +
+	    			        '<option value="펍파티" ' + (el.option_additional == '펍파티' ? 'selected="selected"' : '') + '>펍파티</option>' +
+	    			        '<option value="펍안함" ' + (el.option_additional == '펍안함' ? 'selected="selected"' : '') + '>펍안함</option>' +
+	    			    '</select>';
+	    		break;
 			}
 			
 			html += '' +
-			'<tr>' +
+			'<tr class="option_tr">' +
 				'<input name="option_id" type="hidden" value="' + el.option_id + '"/>' +
 		        '<td>' +
 		            '<select name="option_name" id="option_name">' +
@@ -269,25 +306,14 @@ function loadDetail(res_id){
 		            '</select>' +
 		        '</td>' +
 		        '<td>' +
+		        	option_additional_html + 
+		        '</td>' +
+		        '<td>' +
 		            '<input type="text" class="hastxt" name="option_quantity" value="' + el.option_quantity + '">개' +
 		        '</td>' +
 		        '<td>' +
 		            '<input type="text" class="hastxt" name="option_payment" value="' + el.option_payment + '">원' +
-		        '</td>' +
-		        '<td>' +
-		            option_pay_method_html + 
-		        '</td>' +
-		        '<td>' +
-		            '<div class="date">' +
-		                '<input id="datetimepicker2" type="text" class="input2 datetimepicker2" name="option_hope_time" value="' + new Date(el.option_hope_time).format('yyyy-MM-dd HH:mm:ss') + '">' +
-		                '<i class="cal1"></i>' +
-		            '</div>' +
-		        '</td>' +
-		        '<td>' +
-		            '<select name="option_use_yn" id="">' +
-		                '<option value="Y"  ' + (el.option_use_yn == 'Y' ? 'selected="selected"' : '') + '>수강</option>' +
-		                '<option value="N"  ' + (el.option_use_yn == 'N' ? 'selected="selected"' : '') + '>미수강</option>' +
-		            '</select>' +
+		            '<input type="hidden" name="option_use_yn" value="' + el.option_use_yn + '">' +
 		        '</td>' +
 		        '<td>' +
 		            '<button type="button" class="btn-red2 op-del">삭제</button>' +
@@ -295,8 +321,64 @@ function loadDetail(res_id){
 		    '</tr>';
 		});
 		$(".option_table").html(html);
-		$('.datetimepicker2').datetimepicker({
+		/*$('.datetimepicker2').datetimepicker({
     		format:'Y-m-d H:i',
-    	});
+    	});*/
 	})
+}
+
+//validate 확인
+function validateCheck() {
+	var key = $("select[name=category2]").val();
+	var cur_quantity = parseInt(opener.$("td[category-id="+key+"]").children('span.quantity_total').text()) + parseInt($("input[name=res_quantity]").val());
+	
+	if(parseInt(opener.$("td[category-id="+key+"]").children('span.quantity_max').text()) < cur_quantity){
+		alert("수량을 초과했습니다.");
+		return true;
+	}
+	if(!$("input[name=res_date]").val()){
+		alert("예약날짜를 입력하세요.");
+		$("input[name=res_date]").focus();
+		return true;
+	}
+	if(!$("input[name=res_name]").val()){
+		alert("이름을 입력하세요.");
+		$("input[name=res_name]").focus();
+		return true;
+	}
+	if(!$("input[name=res_phone]").val()){
+		alert("연락처를 입력하세요.");
+		$("input[name=res_phone]").focus();
+		return true;
+	}
+	if(!$("input[name=res_quantity]").val()){
+		alert("수량을 입력하세요.");
+		$("input[name=res_quantity]").focus();
+		return true;
+	}
+	if(!$("input[name=res_payment]").val()){
+		alert("금액을 입력하세요.");
+		$("input[name=res_payment]").focus();
+		return true;
+	}
+	var optionQuantityCheck = false;
+	$("input[name=option_quantity]").each(function(){
+		if(!$(this).val()){
+			optionQuantityCheck = true;
+		}
+	});
+	if(optionQuantityCheck) {
+		alert("수량을 입력하세요.");
+		return true;
+	}
+	var optionPaymentCheck = false;
+	$("input[name=option_payment]").each(function(){
+		if(!$(this).val()){
+			optionPaymentCheck = true;
+		}
+	});
+	if(optionPaymentCheck) {
+		alert("금액을 입력하세요.");
+		return true;
+	}
 }

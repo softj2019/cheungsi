@@ -103,27 +103,25 @@
             <h3 class="title">추가옵션 <button type="button" class="btn-blue2 op-add">추가</button></h3>
             <table class="greyTable v2">
                 <colgroup>
+                    <col width="20%">
+                    <col width="20%">
                     <col width="15%">
-                    <col width="10%">
-                    <col width="20%">
-                    <col width="20%">
-                    <col width="20%">
-                    <col width="10%">
-                    <col width="5%">
+                    <col width="30%">
+                    <col width="15%">
                 </colgroup>
                 <thead>
                     <tr>
-                        <th>분류</th>
+                        <th colspan="2">분류</th>
                         <th>수량</th>
                         <th>금액</th>
-                        <th>구매방법</th>
+                        <!-- <th>구매방법</th>
                         <th>강습시간</th>
-                        <th>수강</th>
+                        <th>수강</th> -->
                         <th>삭제</th>
                     </tr>
                 </thead>
                 <tbody class="option_table">
-                    <tr>
+                    <tr class="option_tr">
                         <td>
                             <select name="option_name" id="option_name">
                                 <option value="서핑강습" selected="selected">서핑강습</option>
@@ -132,13 +130,32 @@
                                 <option value="펍">펍</option>
                             </select>
                         </td>
+                        <td class="option_additional">
+                            <select name="option_hope_time" id="option_hope_time">
+                                <option value="today10">오전10시</option>
+                                <option value="today11">오전11시</option>
+                                <option value="today12">오후12시</option>
+                                <option value="today13">오후01시</option>
+                                <option value="today14">오후02시</option>
+                                <option value="today15">오후03시</option>
+                                <option value="today16">오후04시</option>
+                                <option value="tomorrow10">익일 오전10시</option>
+                                <option value="tomorrow11">익일 오전11시</option>
+                                <option value="tomorrow12">익일 오후12시</option>
+                                <option value="tomorrow13">익일 오후01시</option>
+                                <option value="tomorrow14">익일 오후02시</option>
+                                <option value="tomorrow15">익일 오후03시</option>
+                                <option value="tomorrow16">익일 오후04시</option>
+                            </select>
+                        </td>
                         <td>
                             <input type="text" class="hastxt" name="option_quantity">개
                         </td>
                         <td>
                             <input type="text" class="hastxt" name="option_payment">원
+                            <input type="hidden" name="option_use_yn" value="N">
                         </td>
-                        <td>
+                        <!-- <td>
                             <select name="option_pay_method" id="">
                                 <option value="네이버 강릉 서핑" selected="selected">네이버 강릉 서핑</option>
 								<option value="네이버 양양 서핑">네이버 양양 서핑</option>
@@ -154,19 +171,19 @@
 	                            <input type="text" name="option_pay_method_text" placeholder="직접입력" class="option_pay_method_text">
 	                            <i class="arr-d"></i>
 	                        </div>
-                        </td>
-                        <td>
+                        </td> -->
+                        <!-- <td>
                             <div class="date">
 	                            <input id="datetimepicker2" type="text" class="input2 datetimepicker2" name="option_hope_time">
 	                            <i class="cal1"></i>
 	                        </div>
-                        </td>
-                        <td>
+                        </td> -->
+                        <!-- <td>
                             <select name="option_use_yn" id="">
                                 <option value="Y" >수강</option>
                                 <option value="N" selected="selected">미수강</option>
                             </select>
-                        </td>
+                        </td> -->
                         <td>
                             <button type="button" class="btn-red2 op-del">삭제</button>
                         </td>

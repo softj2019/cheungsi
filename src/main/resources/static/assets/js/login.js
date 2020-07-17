@@ -8,7 +8,7 @@ $(function(){
 			data: formData,
 			success: function(data){
 				if(data.data == 'success'){
-					location.href="/index";
+					location.href="/dashboard";
 				}else{
 					alert("회원정보를 확인해주세요.");
 				}

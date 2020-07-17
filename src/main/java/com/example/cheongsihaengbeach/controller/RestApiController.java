@@ -44,8 +44,6 @@ public class RestApiController {
 			params.put("option_names",reservationVO.getOption_name());
 			params.put("option_quantitys",reservationVO.getOption_quantity());
 			params.put("option_payments",reservationVO.getOption_payment());
-			params.put("option_pay_methods",reservationVO.getOption_pay_method());
-			params.put("option_pay_method_texts",reservationVO.getOption_pay_method_text());
 			params.put("option_hope_times",reservationVO.getOption_hope_time());
 			params.put("option_use_yns",reservationVO.getOption_use_yn());
 		}
@@ -84,11 +82,11 @@ public class RestApiController {
 		return result;
 	}
 	
-	//카테고리
+	//예약목록
 	@RequestMapping("/getReservations")
-	public Map<String, Object> getReservations(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model, ReservationVO reservationVO) {
+	public Map<String, Object> getReservations(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model, ReservationVO reservationVO) throws Exception{
 		Map<String,Object> result = new HashMap<>();
-		reservationVO.setDisplayRowCount(10);
+		reservationVO.setDisplayRowCount(9999999);
 		reservationVO.pageCalculate(restApiService.getReservationCount(params));
 		
 		params.put("rowStart", reservationVO.getRowStart());

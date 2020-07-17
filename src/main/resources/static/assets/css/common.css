@@ -568,17 +568,20 @@ input[type=checkbox]:checked+label::before{
     font-weight: 400 !important;
 }
 .td-t1 {
-    width: 100px;
+    width: 75px;
     font-weight: bold;
 }
 .td-name {
-    width: 90px;
+    width: 60px;
 }
 .td-ph{
-    width: 130px;
+    width: 95px;
 }
 .td-w{
-    width: 100px;
+    width: 60px;
+}
+.td-re{
+    width: 200px;
 }
 .res-main{
     height: auto;
@@ -734,4 +737,10 @@ tr.reservation_tr:hover {
 }
 .hide{
 	display: none;
+}
+.table-head{
+	font-weight: bold;
+}
+.td-t1>span{
+	font-weight: 400;
 }

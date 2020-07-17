@@ -1,5 +1,7 @@
 package com.example.cheongsihaengbeach.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +53,6 @@ public class RestApiService {
 				String[] option_names = ((String)params.get("option_names")).split(",",-1);
 				String[] option_quantitys = ((String)params.get("option_quantitys")).split(",",-1);
 				String[] option_payments = ((String)params.get("option_payments")).split(",",-1);
-				String[] option_pay_methods = ((String)params.get("option_pay_methods")).split(",",-1);
-				String[] option_pay_method_texts = ((String)params.get("option_pay_method_texts")).split(",",-1);
 				String[] option_hope_times = ((String)params.get("option_hope_times")).split(",",-1);
 				String[] option_use_yns = ((String)params.get("option_use_yns")).split(",",-1);
 				
@@ -62,12 +62,54 @@ public class RestApiService {
 					paramsMap.put("option_name",option_names[i]);
 					paramsMap.put("option_quantity",option_quantitys[i]);
 					paramsMap.put("option_payment",option_payments[i]);
-					paramsMap.put("option_pay_method",option_pay_methods[i]);
-					paramsMap.put("option_hope_time",option_hope_times[i]);
-					paramsMap.put("option_use_yn",option_use_yns[i]);
-					if(paramsMap.get("option_pay_method").equals("custom")) {
-						paramsMap.put("option_pay_method",option_pay_method_texts[i]);
+					paramsMap.put("option_pay_method",params.get("res_pay_method"));
+					
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar cal = Calendar.getInstance();
+	            	cal.setTime(df.parse((String)params.get("res_date")));
+	            	
+					String hopeTime = null;
+					if(option_hope_times[i].equals("today10")) {
+						hopeTime = df.format(cal.getTime()) + " 10:00:00";
+					}else if(option_hope_times[i].equals("today11")) {
+						hopeTime = df.format(cal.getTime()) + " 11:00:00";
+					}else if(option_hope_times[i].equals("today12")) {
+						hopeTime = df.format(cal.getTime()) + " 12:00:00";
+					}else if(option_hope_times[i].equals("today13")) {
+						hopeTime = df.format(cal.getTime()) + " 13:00:00";
+					}else if(option_hope_times[i].equals("today14")) {
+						hopeTime = df.format(cal.getTime()) + " 14:00:00";
+					}else if(option_hope_times[i].equals("today15")) {
+						hopeTime = df.format(cal.getTime()) + " 15:00:00";
+					}else if(option_hope_times[i].equals("today16")) {
+						hopeTime = df.format(cal.getTime()) + " 16:00:00";
+					}else if(option_hope_times[i].equals("tomorrow10")) {
+						cal.add(Calendar.DATE, 1);
+						hopeTime = df.format(cal.getTime()) + " 10:00:00";
+					}else if(option_hope_times[i].equals("tomorrow11")) {
+						cal.add(Calendar.DATE, 1);
+						hopeTime = df.format(cal.getTime()) + " 11:00:00";
+					}else if(option_hope_times[i].equals("tomorrow12")) {
+						cal.add(Calendar.DATE, 1);
+						hopeTime = df.format(cal.getTime()) + " 12:00:00";
+					}else if(option_hope_times[i].equals("tomorrow13")) {
+						cal.add(Calendar.DATE, 1);
+						hopeTime = df.format(cal.getTime()) + " 13:00:00";
+					}else if(option_hope_times[i].equals("tomorrow14")) {
+						cal.add(Calendar.DATE, 1);
+						hopeTime = df.format(cal.getTime()) + " 14:00:00";
+					}else if(option_hope_times[i].equals("tomorrow15")) {
+						cal.add(Calendar.DATE, 1);
+						hopeTime = df.format(cal.getTime()) + " 15:00:00";
+					}else if(option_hope_times[i].equals("tomorrow16")) {
+						cal.add(Calendar.DATE, 1);
+						hopeTime = df.format(cal.getTime()) + " 16:00:00";
 					}
+					paramsMap.put("option_hope_time",hopeTime);
+					if(hopeTime == null) {
+						paramsMap.put("option_additional",option_hope_times[i]);
+					}
+					paramsMap.put("option_use_yn",option_use_yns[i]);
 					
 					reservationMapper.insertReservationOption(paramsMap);
 				}
@@ -100,10 +142,20 @@ public class RestApiService {
 		result.put("msg", "success");
 	}
 
-	public void getReservations(HashMap<String, Object> params, Map<String, Object> result) {
+	public void getReservations(HashMap<String, Object> params, Map<String, Object> result) throws Exception{
 		List<Map<String, Object>> getReservations = reservationMapper.getReservations(params);
-		 
 		result.put("reservations",getReservations);
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+    	cal.setTime(df.parse((String)params.get("res_date")));
+    	cal.add(Calendar.DATE, -1);
+    	params.put("res_date",df.format(cal.getTime()));
+    	List<Map<String, Object>> getReservationsYesterday = reservationMapper.getReservations(params);
+		result.put("reservationsYesterday",getReservationsYesterday);
+    	
+		List<Map<String, Object>> getDefaultCategorys = categoryMapper.getDefaultCategorys();
+		result.put("categorys",getDefaultCategorys);
 	}
 	
 	public int getReservationCount(HashMap<String, Object> params) {
