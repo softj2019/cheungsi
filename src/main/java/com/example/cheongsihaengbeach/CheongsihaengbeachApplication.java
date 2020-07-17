@@ -1,5 +1,9 @@
 package com.example.cheongsihaengbeach;
 
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +15,11 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @SpringBootApplication
 public class CheongsihaengbeachApplication {
 
+	@PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+    }
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CheongsihaengbeachApplication.class, args);
 	}

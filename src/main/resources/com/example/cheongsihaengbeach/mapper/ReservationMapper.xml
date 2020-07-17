@@ -27,7 +27,9 @@
 		<if test="res_date != null and res_date != ''">and date_format(A.res_date,'%Y-%m-%d') = #{res_date}</if>
 	</select>
 	<select id="getReservations" resultMap="reservationMap" parameterType="hashmap">
-		SELECT A.*,B.*,
+		SELECT date_format(A.res_date,'%Y-%m-%d %H:%i') res_date,
+			date_format(A.reg_date,'%Y-%m-%d %H:%i') reg_date,
+			A.*,B.*,
 			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, B.category_name, (SELECT category_name FROM category WHERE category_id=B.category_upper_id)) AS category1,
 			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, NULL, B.category_name) AS category2
 		from reservation A
@@ -40,12 +42,16 @@
 		limit ${rowStart-1}, ${displayRowCount}
 	</select>
 	<select id="getOptions" resultType="hashmap" parameterType="hashmap">
-		select *
-		from reservation_option
+		select date_format(A.option_hope_time,'%Y-%m-%d %H:%i') option_hope_time,
+			date_format(A.reg_date,'%Y-%m-%d %H:%i') reg_date, 
+			A.*
+		from reservation_option A
 		where res_no = #{res_no}
 	</select>
 	<select id="getReservationDetail" resultMap="reservationMap" parameterType="hashmap">
-		SELECT A.*,B.*,
+		SELECT date_format(A.res_date,'%Y-%m-%d %H:%i') res_date,
+			date_format(A.reg_date,'%Y-%m-%d %H:%i') reg_date,
+			A.*,B.*,
 			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, B.category_id, (SELECT category_id FROM category WHERE category_id=B.category_upper_id)) AS category1,
 			if((SELECT category_name FROM category WHERE category_id=B.category_upper_id) IS NULL, NULL, B.category_id) AS category2
 		from reservation A
