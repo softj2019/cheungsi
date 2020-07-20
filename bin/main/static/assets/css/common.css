@@ -568,7 +568,7 @@ input[type=checkbox]:checked+label::before{
     font-weight: 400 !important;
 }
 .td-t1 {
-    width: 75px;
+    width: 60px;
     font-weight: bold;
 }
 .td-name {
@@ -699,7 +699,7 @@ button.v2{
     border-radius: 0;
     width:80px;
 }
-.toggleCheckinYn, .toggleUseYn {
+.toggleCheckinYn, .toggleUseYn, td.reservation_name{
     cursor: pointer;
 }
 .toggleUseYn.c-active {
@@ -743,4 +743,7 @@ tr.reservation_tr:hover {
 }
 .td-t1>span{
 	font-weight: 400;
+}
+table *{
+	font-size: 11px;
 }

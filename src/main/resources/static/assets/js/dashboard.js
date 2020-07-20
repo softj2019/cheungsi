@@ -41,7 +41,7 @@ $(function(){
 	});
 	
 	//tr선택시 상세창
-	$(document).on('click','tr.reservation_tr',function(){
+	$(document).on('click','td.reservation_name',function(){
 		reservationPopup($(this).attr("data-id"));
     });
     /******************************************* listener end *******************************************/
@@ -86,13 +86,6 @@ function loadReservationTable() {
 						                	'<td class="td-w"></td>' +
 						                	'<td class="td-w"></td>' +
 						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
 						                	'<td class="td-re"></td>' +
 						                	'<td class="td-t1"></td>' +
 						                '</tr>' +
@@ -104,31 +97,24 @@ function loadReservationTable() {
 					'<td class="td-t1" category-id="'+category.category_id+'">'+category.category_name+'<br><span>(</span><span class="quantity_max">'+category.category_max_quantity+'</span><span>인) / </span><span class="quantity_total">0</span></td>' +
 								'<td class="td-t1">' +
 									'<table class="sub-in-table" category-id="'+category.category_id+'">' +
-						                '<tr>' +
-						                	'<td class="td-name"></td>' +
-						                	'<td class="td-ph"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-w"></td>' +
-						                	'<td class="td-re"></td>' +
-						                	'<td class="td-t1"></td>' +
-						                '</tr>' +
+									'<tr>' +
+				                	'<td class="td-name"></td>' +
+				                	'<td class="td-ph"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-w"></td>' +
+				                	'<td class="td-re"></td>' +
+				                	'<td class="td-t1"></td>' +
+				                '</tr>' +
 					                '</table>' +
 								'</td>' +
 							'</tr>';
@@ -157,24 +143,17 @@ function loadReservationTable() {
 					surfingClassYesterday_quantity_total += parseInt(surfingClass.option_quantity);
 					
 					surfingClassYesterdayHtml += '<tr class="reservation_tr" data-id="'+el.res_id+'">' +
-			                    '<td class="td-name">'+el.res_name+'</td>' +
+			                    '<td class="td-name reservation_name" data-id="'+el.res_id+'">'+el.res_name+'</td>' +
 			                    '<td class="td-ph">'+el.res_phone+'</td>' +
-			                    '<td class="td-w">'+el.res_quantity+'</td>' +
-			                    '<td class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
 			                    '<td class="td-w">'+el.res_pay_method+'</td>' +
+			                    '<td class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
+			                    '<td class="td-w">'+el.res_quantity+'</td>' +
 			                    '<td class="td-w">'+new Date(el.res_date).format("yyyy-MM-dd")+'</td>' +
 			                    '<td class="td-w toggleCheckinYn '+(el.res_checkin_yn == 'Y' ? 'bgBlue' : '')+'" data-id="'+el.res_id+'">'+el.res_checkin_yn+'</td>' +
 								'<td class="td-w">'+surfingClass.option_quantity+'</td>' +
-			                    '<td class="td-w">'+surfingClass.option_payment.toLocaleString('en')+'</td>' +
-			                    '<td class="td-w">'+surfingClass.option_pay_method+'</td>' +
-								'<td data-id="'+surfingClass.option_id+'" class="td-w toggleUseYn '+(surfingClass.option_use_yn == 'Y' ? 'bgBlue' : '')+'">'+class_time+'</td>' +
+								'<td class="td-w">'+class_time+'</td>' +
+								'<td data-id="'+surfingClass.option_id+'" class="td-w toggleUseYn '+(surfingClass.option_use_yn == 'Y' ? 'bgBlue' : '')+'">'+surfingClass.option_use_yn+'</td>' +
 								'<td class="td-w"></td>' +
-								'<td class="td-w"></td>' +
-			                    '<td class="td-w"></td>' +
-			                    '<td class="td-w"></td>' +
-			                    '<td class="td-w"></td>' +
-			                    '<td class="td-w"></td>' +
-			                    '<td class="td-w"></td>' +
 			                    '<td class="td-w"></td>' +
 			                    '<td class="td-w"></td>' +
 			                    '<td class="td-w"></td>' +
@@ -216,19 +195,17 @@ function loadReservationTable() {
 				var options = [surfingClass,surfingRental,party,pub];
 
 				html += '<tr class="reservation_tr" data-id="'+el.res_id+'">' +
-	                        '<td rowspan="'+optionLen+'" class="td-name">'+el.res_name+'</td>' +
+	                        '<td rowspan="'+optionLen+'" class="td-name reservation_name" data-id="'+el.res_id+'">'+el.res_name+'</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-ph">'+el.res_phone+'</td>' +
-	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_quantity+'</td>' +
-	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_pay_method+'</td>' +
+	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
+	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_quantity+'</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-w">'+new Date(el.res_date).format("yyyy-MM-dd")+'</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-w toggleCheckinYn '+(el.res_checkin_yn == 'Y' ? 'bgBlue' : '')+'" data-id="'+el.res_id+'">'+el.res_checkin_yn+'</td>';
 				options.forEach(function(elSub, idx){
 					if(elSub){
 						html += '' +
-							'<td class="td-w">'+elSub.option_quantity+'</td>' +
-	                        '<td class="td-w">'+elSub.option_payment.toLocaleString('en')+'</td>' +
-	                        '<td class="td-w">'+elSub.option_pay_method+'</td>';
+							'<td class="td-w">'+elSub.option_quantity+'</td>';
 						if(idx == 0){
 							var class_time = '';
 							if(new Date(elSub.option_hope_time).format("yyyyMMdd") == new Date(el.res_date).format("yyyyMMdd")){
@@ -237,7 +214,8 @@ function loadReservationTable() {
 								class_time = new Date(elSub.option_hope_time).format("익일 a/phh시")
 							}
 							html += '' +
-							'<td data-id="'+elSub.option_id+'" class="td-w toggleUseYn '+(elSub.option_use_yn == 'Y' ? 'bgBlue' : '')+'">'+class_time+'</td>';
+							'<td class="td-w">'+class_time+'</td>' +
+							'<td data-id="'+elSub.option_id+'" class="td-w toggleUseYn '+(elSub.option_use_yn == 'Y' ? 'bgBlue' : '')+'">'+elSub.option_use_yn+'</td>';
 						}
 						if(idx == 1){
 							html += '' +
@@ -245,10 +223,13 @@ function loadReservationTable() {
 						}
 					}else{
 						html += '' +
-							'<td class="td-w"></td>' +
-	                        '<td class="td-w"></td>' +
 	                        '<td class="td-w"></td>';
-						if(idx == 0 || idx == 1){
+						if(idx == 0){
+							html +=	'' +
+							'<td class="td-w"></td>' +
+							'<td class="td-w"></td>';
+						}
+						if(idx == 1){
 							html +=	'' +
 							'<td class="td-w"></td>';
 						}

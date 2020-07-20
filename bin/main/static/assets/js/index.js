@@ -75,17 +75,15 @@ function loadReservationTable() {
 				            '<td>'+el.category2+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-name">'+el.res_name+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-ph">'+el.res_phone+'</td>' +
-                            '<td rowspan="'+optionLen+'" class="td-w">'+el.res_quantity+'</td>' +
-                            '<td rowspan="'+optionLen+'" class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-w">'+el.res_pay_method+'</td>' +
+                            '<td rowspan="'+optionLen+'" class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
+                            '<td rowspan="'+optionLen+'" class="td-w">'+el.res_quantity+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-w">'+new Date(el.res_date).format("yyyy-MM-dd")+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-w toggleCheckinYn '+(el.res_checkin_yn == 'Y' ? 'bgBlue' : '')+'" data-id="'+el.res_id+'">'+el.res_checkin_yn+'</td>';
 				options.forEach(function(elSub, idx){
 					if(elSub){
 						html += '' +
-							'<td class="td-w">'+elSub.option_quantity+'</td>' +
-                            '<td class="td-w">'+elSub.option_payment.toLocaleString('en')+'</td>' +
-                            '<td class="td-w">'+elSub.option_pay_method+'</td>';
+							'<td class="td-w">'+elSub.option_quantity+'</td>';
 						if(idx == 0){
 							var class_time = '';
 							if(new Date(elSub.option_hope_time).format("yyyyMMdd") == new Date(el.res_date).format("yyyyMMdd")){
@@ -94,7 +92,8 @@ function loadReservationTable() {
 								class_time = new Date(elSub.option_hope_time).format("익일 a/phh시")
 							}
 							html += '' +
-							'<td class="td-w toggleUseYn '+(option[0].option_use_yn == 'Y' ? 'bgBlue' : '')+'">'+class_time+'</td>';
+							'<td class="td-w">'+class_time+'</td>' +
+							'<td class="td-w toggleUseYn '+(elSub.option_use_yn == 'Y' ? 'bgBlue' : '')+'">'+elSub.option_use_yn+'</td>';
 						}
 						if(idx == 1){
 							html += '' +
@@ -102,10 +101,13 @@ function loadReservationTable() {
 						}
 					}else{
 						html += '' +
-							'<td class="td-w"></td>' +
-	                        '<td class="td-w"></td>' +
 	                        '<td class="td-w"></td>';
-						if(idx == 0 || idx == 1){
+						if(idx == 0){
+							html +=	'' +
+							'<td class="td-w"></td>' +
+							'<td class="td-w"></td>';
+						}
+						if(idx == 1){
 							html +=	'' +
 							'<td class="td-w"></td>';
 						}

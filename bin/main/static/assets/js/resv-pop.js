@@ -38,9 +38,6 @@ $(function(){
 			        '</td>' +
 			        '<td>' +
 			            '<input type="text" class="hastxt" name="option_quantity">개' +
-			        '</td>' +
-			        '<td>' +
-			            '<input type="text" class="hastxt" name="option_payment">원' +
 			            '<input type="hidden" name="option_use_yn" value="N">' +
 			        '</td>' +
 			        '<td>' +
@@ -90,17 +87,19 @@ $(function(){
     	case '파티':
     		html += '<select name="option_hope_time" id="option_hope_time">' +
     			        '<option value="바베큐파티">바베큐파티</option>' +
-    			        '<option value="바베큐안함">바베큐안함</option>' +
     			    '</select>';
     		break;
     	case '펍':
     		html += '<select name="option_hope_time" id="option_hope_time">' +
     			        '<option value="펍파티">펍파티</option>' +
-    			        '<option value="펍안함">펍안함</option>' +
     			    '</select>';
     		break;
     	}
     	$(this).parents('td').siblings('td.option_additional').html(html);
+    	
+    	if(value == '파티' || value == '펍'){
+    		$(this).parents('td').next().next().children('input[name=option_quantity]').focus();
+    	}
     })
     
     $.datetimepicker.setLocale('kr');//20.07.13 추가~
@@ -283,13 +282,11 @@ function loadDetail(res_id){
 	    	case '파티':
 	    		option_additional_html += '<select name="option_hope_time" id="option_hope_time">' +
 	    			        '<option value="바베큐파티" ' + (el.option_additional == '바베큐파티' ? 'selected="selected"' : '') + '>바베큐파티</option>' +
-	    			        '<option value="바베큐안함" ' + (el.option_additional == '바베큐안함' ? 'selected="selected"' : '') + '>바베큐안함</option>' +
 	    			    '</select>';
 	    		break;
 	    	case '펍':
 	    		option_additional_html += '<select name="option_hope_time" id="option_hope_time">' +
 	    			        '<option value="펍파티" ' + (el.option_additional == '펍파티' ? 'selected="selected"' : '') + '>펍파티</option>' +
-	    			        '<option value="펍안함" ' + (el.option_additional == '펍안함' ? 'selected="selected"' : '') + '>펍안함</option>' +
 	    			    '</select>';
 	    		break;
 			}
@@ -305,15 +302,13 @@ function loadDetail(res_id){
 		                '<option value="펍" ' + (el.option_name == '펍' ? 'selected="selected"' : '') + '>펍</option>' +
 		            '</select>' +
 		        '</td>' +
-		        '<td>' +
+		        '<td class="option_additional">' +
 		        	option_additional_html + 
 		        '</td>' +
 		        '<td>' +
 		            '<input type="text" class="hastxt" name="option_quantity" value="' + el.option_quantity + '">개' +
-		        '</td>' +
-		        '<td>' +
-		            '<input type="text" class="hastxt" name="option_payment" value="' + el.option_payment + '">원' +
 		            '<input type="hidden" name="option_use_yn" value="' + el.option_use_yn + '">' +
+		            '<input type="hidden" class="hastxt" name="option_payment" value="' + el.option_payment + '">' +
 		        '</td>' +
 		        '<td>' +
 		            '<button type="button" class="btn-red2 op-del">삭제</button>' +
