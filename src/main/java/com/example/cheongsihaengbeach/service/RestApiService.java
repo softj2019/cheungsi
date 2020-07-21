@@ -62,7 +62,6 @@ public class RestApiService {
 					paramsMap.put("res_no",res_no);
 					paramsMap.put("option_name",option_names[i]);
 					paramsMap.put("option_quantity",option_quantitys[i]);
-					paramsMap.put("option_payment",option_payments[i]);
 					paramsMap.put("option_pay_method",params.get("res_pay_method"));
 					
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");

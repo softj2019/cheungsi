@@ -363,17 +363,7 @@ function validateCheck() {
 		}
 	});
 	if(optionQuantityCheck) {
-		alert("수량을 입력하세요.");
-		return true;
-	}
-	var optionPaymentCheck = false;
-	$("input[name=option_payment]").each(function(){
-		if(!$(this).val()){
-			optionPaymentCheck = true;
-		}
-	});
-	if(optionPaymentCheck) {
-		alert("금액을 입력하세요.");
+		alert("옵션 수량을 입력하세요.");
 		return true;
 	}
 }
