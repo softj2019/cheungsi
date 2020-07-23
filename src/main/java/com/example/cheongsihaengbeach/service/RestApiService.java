@@ -148,7 +148,7 @@ public class RestApiService {
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
-    	cal.setTime((String)params.get("res_date") == null ? new Date() : df.parse((String)params.get("res_date")));
+    	cal.setTime((String)params.get("res_date") == null || ((String)params.get("res_date")).equals("") ? new Date() : df.parse((String)params.get("res_date")));
     	cal.add(Calendar.DATE, -1);
     	params.put("res_date",df.format(cal.getTime()));
     	List<Map<String, Object>> getReservationsYesterday = reservationMapper.getReservations(params);

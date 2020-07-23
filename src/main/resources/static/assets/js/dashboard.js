@@ -49,6 +49,23 @@ $(function(){
 
 //테이블 로드
 function loadReservationTable() {
+	var total_payment = 0;
+	var option_default_cnt = 0;
+	var option_surfing_class_cnt = 0;
+	var option_surfing_rental_cnt = 0;
+	var option_party_cnt = 0;
+	var option_pub_cnt = 0;
+	var payment_ngs = 0;
+	var payment_nys = 0;
+	var payment_ngh = 0;
+	var payment_frip = 0;
+	var payment_cash = 0;
+	var payment_card = 0;
+	var payment_service = 0;
+	var payment_fcash = 0;
+	var payment_fcard = 0;
+	var payment_custom = 0;
+	
 	postCallAjax('/api/getReservations', searchVO, function(data){
 		console.log(data);
 		searchVO = data.searchVO;
@@ -140,6 +157,7 @@ function loadReservationTable() {
 				}
 				console.log(class_time);
 				if(class_time){
+					option_surfing_class_cnt += parseInt(el.res_quantity);
 					surfingClassYesterday_quantity_total += parseInt(surfingClass.option_quantity);
 					
 					surfingClassYesterdayHtml += '<tr class="reservation_tr" data-id="'+el.res_id+'">' +
@@ -177,6 +195,42 @@ function loadReservationTable() {
 			var html = '';
 			var quantity_total = 0;
 			val.forEach(function(el){
+				option_default_cnt += parseInt(el.res_quantity);
+				total_payment += parseInt(el.res_payment);
+				
+				switch (el.res_pay_method) {
+				case '네이버 강릉 서핑':
+					payment_ngs += parseInt(el.res_payment);
+					break;
+				case '네이버 양양 서핑':
+					payment_nys += parseInt(el.res_payment);
+					break;
+				case '네이버 게스트 하우스':
+					payment_ngh += parseInt(el.res_payment);
+					break;
+				case '프립':
+					payment_frip += parseInt(el.res_payment);
+					break;
+				case '현금':
+					payment_cash += parseInt(el.res_payment);
+					break;
+				case '카드':
+					payment_card += parseInt(el.res_payment);
+					break;
+				case '서비스':
+					payment_service += parseInt(el.res_payment);
+					break;
+				case '현장결제 현금':
+					payment_fcash += parseInt(el.res_payment);
+					break;
+				case '현장결제 카드':
+					payment_fcard += parseInt(el.res_payment);
+					break;
+				default:
+					payment_custom += parseInt(el.res_payment);
+					break;
+				}
+				
 				quantity_total += parseInt(el.res_quantity);
 				var optionLen = 1;
 				var option = el.res_options;
@@ -204,6 +258,21 @@ function loadReservationTable() {
 	                        '<td rowspan="'+optionLen+'" class="td-w toggleCheckinYn '+(el.res_checkin_yn == 'Y' ? 'bgBlue' : '')+'" data-id="'+el.res_id+'">'+el.res_checkin_yn+'</td>';
 				options.forEach(function(elSub, idx){
 					if(elSub){
+						switch (idx) {
+						case 0:
+							option_surfing_class_cnt += parseInt(elSub.option_quantity);
+							break;
+						case 1:
+							option_surfing_rental_cnt += parseInt(elSub.option_quantity);
+							break;
+						case 2:
+							option_party_cnt += parseInt(elSub.option_quantity);
+							break;
+						case 3:
+							option_pub_cnt += parseInt(elSub.option_quantity);
+							break;
+						}
+						
 						html += '' +
 							'<td class="td-w">'+elSub.option_quantity+'</td>';
 						if(idx == 0){
@@ -249,6 +318,23 @@ function loadReservationTable() {
 			$("table[category-id="+key+"]").html(html);
 		});
 //		pagination(searchVO, 'loadReservationTable()');
+		
+		$("span.total_payment").text(total_payment.toLocaleString('en'));
+		$("span.option_default_cnt").text(option_default_cnt.toLocaleString('en'));
+		$("span.option_surfing_class_cnt").text(option_surfing_class_cnt.toLocaleString('en'));
+		$("span.option_surfing_rental_cnt").text(option_surfing_rental_cnt.toLocaleString('en'));
+		$("span.option_party_cnt").text(option_party_cnt.toLocaleString('en'));
+		$("span.option_pub_cnt").text(option_pub_cnt.toLocaleString('en'));
+		$("span.payment_ngs").text(payment_ngs.toLocaleString('en'));
+		$("span.payment_nys").text(payment_nys.toLocaleString('en'));
+		$("span.payment_ngh").text(payment_ngh.toLocaleString('en'));
+		$("span.payment_frip").text(payment_frip.toLocaleString('en'));
+		$("span.payment_cash").text(payment_cash.toLocaleString('en'));
+		$("span.payment_card").text(payment_card.toLocaleString('en'));
+		$("span.payment_service").text(payment_service.toLocaleString('en'));
+		$("span.payment_fcash").text(payment_fcash.toLocaleString('en'));
+		$("span.payment_fcard").text(payment_fcard.toLocaleString('en'));
+		$("span.payment_custom").text(payment_custom.toLocaleString('en'));
 	});
 }
 

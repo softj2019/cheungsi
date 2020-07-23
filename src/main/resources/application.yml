@@ -10,3 +10,10 @@ mybatis:  type-aliases-package: com.example.cheongsihaengbeach.domain
     default-statement-timeout: 30
 server:
   port: 80
+  servlet:
+    session:
+      timeout: 24h
+      cookie:
+        max-age: 24h
+          
+  

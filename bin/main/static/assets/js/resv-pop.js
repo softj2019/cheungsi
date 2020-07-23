@@ -97,9 +97,9 @@ $(function(){
     	}
     	$(this).parents('td').siblings('td.option_additional').html(html);
     	
-    	if(value == '파티' || value == '펍'){
+/*    	if(value == '파티' || value == '펍'){
     		$(this).parents('td').next().next().children('input[name=option_quantity]').focus();
-    	}
+    	}*/
     })
     
     $.datetimepicker.setLocale('kr');//20.07.13 추가~
@@ -231,6 +231,7 @@ function loadDetail(res_id){
 			detail.res_pay_method != '네이버 게스트 하우스' &&
 			detail.res_pay_method != '현금' &&
 			detail.res_pay_method != '카드' &&
+			detail.res_pay_method != '프립' &&
 			detail.res_pay_method != '서비스' &&
 			detail.res_pay_method != '현장결제 카드' &&
 			detail.res_pay_method != '현장결제 현금'){

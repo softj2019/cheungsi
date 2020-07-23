@@ -747,3 +747,6 @@ tr.reservation_tr:hover {
 table *{
 	font-size: 11px;
 }
+.logout{
+	color: #FFF;
+}

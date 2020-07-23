@@ -66,6 +66,8 @@ public class MainController {
 	public String reservation(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess, ModelMap model) {
 		if(sess.getAttribute("loginId") == null) {
 			return "redirect:/login";
+		}else if(!"10".equals(sess.getAttribute("level"))) {
+			return "redirect:/dashboard";
 		}
 		
 		params.put("category_upper_id",'0');
