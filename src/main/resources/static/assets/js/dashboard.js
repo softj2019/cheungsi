@@ -157,7 +157,6 @@ function loadReservationTable() {
 				}
 				console.log(class_time);
 				if(class_time){
-					option_surfing_class_cnt += parseInt(el.res_quantity);
 					surfingClassYesterday_quantity_total += parseInt(surfingClass.option_quantity);
 					
 					surfingClassYesterdayHtml += '<tr class="reservation_tr" data-id="'+el.res_id+'">' +
