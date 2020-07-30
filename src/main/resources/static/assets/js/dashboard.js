@@ -40,9 +40,16 @@ $(function(){
 		})
 	});
 	
-	//tr선택시 상세창
+	//이름td 선택시 상세창
 	$(document).on('click','td.reservation_name',function(){
 		reservationPopup($(this).attr("data-id"));
+    });
+	
+	//카테고리td 선택시 예약등록창 카테고리표시 
+	$(document).on('click','td.category2-td',function(){
+		var category_id = $(this).attr("category-id");
+		var upper_id = $(this).attr("upper-id");
+		reservationPopupCategory(category_id,upper_id);
     });
     /******************************************* listener end *******************************************/
 });
@@ -52,9 +59,12 @@ function loadReservationTable() {
 	var total_payment = 0;
 	var option_default_cnt = 0;
 	var option_surfing_class_cnt = 0;
+	var option_surfing_class_cnt_obj = {};
 	var option_surfing_rental_cnt = 0;
-	var option_party_cnt = 0;
-	var option_pub_cnt = 0;
+	var option_party_cnt_m = 0;
+	var option_party_cnt_w = 0;
+	var option_pub_cnt_m = 0;
+	var option_pub_cnt_w = 0;
 	var payment_ngs = 0;
 	var payment_nys = 0;
 	var payment_ngh = 0;
@@ -73,7 +83,7 @@ function loadReservationTable() {
 		var listYesterday = data.reservationsYesterday;
 		var categoryList = data.categorys
 		var html = '';
-		
+
 		var groupCategory =  categoryList.reduce(function(acc, cur, idx){
 			if(!acc[cur['category_upper_name']]) acc[cur['category_upper_name']] = [];
 			acc[cur['category_upper_name']].push(cur);
@@ -85,7 +95,7 @@ function loadReservationTable() {
 				if(idx == 0){
 					html += '<tr>' +
 								'<td class="td-t1" rowspan="'+val.length+'">'+key+'</td>' +
-								'<td class="td-t1" category-id="'+category.category_id+'">'+category.category_name+'<br><span>(</span><span class="quantity_max">'+category.category_max_quantity+'</span><span>인) / </span><span class="quantity_total">0</span></td>' +
+								'<td class="td-t1 category2-td" upper-id="'+category.category_upper_id+'" category-id="'+category.category_id+'">'+category.category_name+'<br><span>(</span><span class="quantity_max">'+category.category_max_quantity+'</span><span>인) / </span><span class="quantity_total">0</span></td>' +
 								'<td>' +
 									'<table class="sub-in-table" category-id="'+category.category_id+'">' +
 						                '<tr>' +
@@ -111,7 +121,7 @@ function loadReservationTable() {
 							'</tr>';
 				}else{
 					html += '<tr>' +
-					'<td class="td-t1" category-id="'+category.category_id+'">'+category.category_name+'<br><span>(</span><span class="quantity_max">'+category.category_max_quantity+'</span><span>인) / </span><span class="quantity_total">0</span></td>' +
+					'<td class="td-t1 category2-td" upper-id="'+category.category_upper_id+'" category-id="'+category.category_id+'">'+category.category_name+'<br><span>(</span><span class="quantity_max">'+category.category_max_quantity+'</span><span>인) / </span><span class="quantity_total">0</span></td>' +
 								'<td class="td-t1">' +
 									'<table class="sub-in-table" category-id="'+category.category_id+'">' +
 									'<tr>' +
@@ -155,19 +165,22 @@ function loadReservationTable() {
 				if(new Date(surfingClass.option_hope_time).format("yyyyMMdd") != new Date(el.res_date).format("yyyyMMdd")){
 					class_time = new Date(surfingClass.option_hope_time).format("a/phh시")
 				}
-				console.log(class_time);
+
 				if(class_time){
 					surfingClassYesterday_quantity_total += parseInt(surfingClass.option_quantity);
+					option_surfing_class_cnt += parseInt(surfingClass.option_quantity);
+					if(!option_surfing_class_cnt_obj[class_time]) option_surfing_class_cnt_obj[class_time] = parseInt(surfingClass.option_quantity);
+					else option_surfing_class_cnt_obj[class_time] += parseInt(surfingClass.option_quantity);
 					
 					surfingClassYesterdayHtml += '<tr class="reservation_tr" data-id="'+el.res_id+'">' +
 			                    '<td class="td-name reservation_name" data-id="'+el.res_id+'">'+el.res_name+'</td>' +
 			                    '<td class="td-ph">'+el.res_phone+'</td>' +
 			                    '<td class="td-w">'+el.res_pay_method+'</td>' +
 			                    '<td class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
-			                    '<td class="td-w">'+el.res_quantity+'</td>' +
+			                    '<td class="td-w">'+(el.res_sex ? el.res_sex : '')+' '+el.res_quantity+'명</td>' +
 			                    '<td class="td-w">'+new Date(el.res_date).format("yyyy-MM-dd")+'</td>' +
 			                    '<td class="td-w toggleCheckinYn '+(el.res_checkin_yn == 'Y' ? 'bgBlue' : '')+'" data-id="'+el.res_id+'">'+el.res_checkin_yn+'</td>' +
-								'<td class="td-w">'+surfingClass.option_quantity+'</td>' +
+								'<td class="td-w">'+(el.res_sex ? el.res_sex : '')+' '+surfingClass.option_quantity+'명</td>' +
 								'<td class="td-w">'+class_time+'</td>' +
 								'<td data-id="'+surfingClass.option_id+'" class="td-w toggleUseYn '+(surfingClass.option_use_yn == 'Y' ? 'bgBlue' : '')+'">'+surfingClass.option_use_yn+'</td>' +
 								'<td class="td-w"></td>' +
@@ -198,13 +211,13 @@ function loadReservationTable() {
 				total_payment += parseInt(el.res_payment);
 				
 				switch (el.res_pay_method) {
-				case '네이버 강릉 서핑':
+				case '강릉 서핑':
 					payment_ngs += parseInt(el.res_payment);
 					break;
-				case '네이버 양양 서핑':
+				case '양양 서핑':
 					payment_nys += parseInt(el.res_payment);
 					break;
-				case '네이버 게스트 하우스':
+				case '게스트 하우스':
 					payment_ngh += parseInt(el.res_payment);
 					break;
 				case '프립':
@@ -252,32 +265,35 @@ function loadReservationTable() {
 	                        '<td rowspan="'+optionLen+'" class="td-ph">'+el.res_phone+'</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_pay_method+'</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
-	                        '<td rowspan="'+optionLen+'" class="td-w">'+el.res_quantity+'</td>' +
+	                        '<td rowspan="'+optionLen+'" class="td-w">'+(el.res_sex ? el.res_sex : '')+' '+el.res_quantity+'명</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-w">'+new Date(el.res_date).format("yyyy-MM-dd")+'</td>' +
 	                        '<td rowspan="'+optionLen+'" class="td-w toggleCheckinYn '+(el.res_checkin_yn == 'Y' ? 'bgBlue' : '')+'" data-id="'+el.res_id+'">'+el.res_checkin_yn+'</td>';
 				options.forEach(function(elSub, idx){
 					if(elSub){
 						switch (idx) {
-						case 0:
-							option_surfing_class_cnt += parseInt(elSub.option_quantity);
-							break;
 						case 1:
 							option_surfing_rental_cnt += parseInt(elSub.option_quantity);
 							break;
 						case 2:
-							option_party_cnt += parseInt(elSub.option_quantity);
+							if(el.res_sex && el.res_sex == '남') option_party_cnt_m += parseInt(elSub.option_quantity);
+							if(el.res_sex && el.res_sex == '여') option_party_cnt_w += parseInt(elSub.option_quantity);
 							break;
 						case 3:
-							option_pub_cnt += parseInt(elSub.option_quantity);
+							if(el.res_sex && el.res_sex == '남') option_pub_cnt_m += parseInt(elSub.option_quantity);
+							if(el.res_sex && el.res_sex == '여') option_pub_cnt_w += parseInt(elSub.option_quantity);
 							break;
 						}
 						
 						html += '' +
-							'<td class="td-w">'+elSub.option_quantity+'</td>';
+							'<td class="td-w">'+(el.res_sex ? el.res_sex : '')+' '+elSub.option_quantity+'명</td>';
 						if(idx == 0){
 							var class_time = '';
 							if(new Date(elSub.option_hope_time).format("yyyyMMdd") == new Date(el.res_date).format("yyyyMMdd")){
 								class_time = new Date(elSub.option_hope_time).format("a/phh시")
+
+								option_surfing_class_cnt += parseInt(elSub.option_quantity);
+								if(!option_surfing_class_cnt_obj[class_time]) option_surfing_class_cnt_obj[class_time] = parseInt(elSub.option_quantity);
+								else option_surfing_class_cnt_obj[class_time] += parseInt(elSub.option_quantity);
 							}else{
 								class_time = new Date(elSub.option_hope_time).format("익일 a/phh시")
 							}
@@ -322,8 +338,10 @@ function loadReservationTable() {
 		$("span.option_default_cnt").text(option_default_cnt.toLocaleString('en'));
 		$("span.option_surfing_class_cnt").text(option_surfing_class_cnt.toLocaleString('en'));
 		$("span.option_surfing_rental_cnt").text(option_surfing_rental_cnt.toLocaleString('en'));
-		$("span.option_party_cnt").text(option_party_cnt.toLocaleString('en'));
-		$("span.option_pub_cnt").text(option_pub_cnt.toLocaleString('en'));
+		$("span.option_party_cnt_m").text(option_party_cnt_m.toLocaleString('en'));
+		$("span.option_party_cnt_w").text(option_party_cnt_w.toLocaleString('en'));
+		$("span.option_pub_cnt_m").text(option_pub_cnt_m.toLocaleString('en'));
+		$("span.option_pub_cnt_w").text(option_pub_cnt_w.toLocaleString('en'));
 		$("span.payment_ngs").text(payment_ngs.toLocaleString('en'));
 		$("span.payment_nys").text(payment_nys.toLocaleString('en'));
 		$("span.payment_ngh").text(payment_ngh.toLocaleString('en'));
@@ -334,6 +352,13 @@ function loadReservationTable() {
 		$("span.payment_fcash").text(payment_fcash.toLocaleString('en'));
 		$("span.payment_fcard").text(payment_fcard.toLocaleString('en'));
 		$("span.payment_custom").text(payment_custom.toLocaleString('en'));
+		
+		var surfingClassTimeHtml = '';
+		option_surfing_class_cnt_obj = sortObject(option_surfing_class_cnt_obj);
+		$.each(option_surfing_class_cnt_obj, function(item,index){
+			surfingClassTimeHtml += '<p>서핑강습 '+item+': '+index+'명'+'</p>';
+		});
+		$(".surfingClassTimeTotal").html(surfingClassTimeHtml);
 	});
 }
 

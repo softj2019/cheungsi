@@ -23,6 +23,15 @@ function reservationPopup(res_id){
     reservationChild = window.open('/popup/resv-pop?res_id='+(res_id ? res_id : ''),'_blank','width=700, height=950, toolbar=no, menubar=no, scrollbars=yes, resizable=yes');
 }
 
+//예약등록팝업 카테고리선택시
+function reservationPopupCategory(category_id, upper_id){
+    if(reservationChild != undefined){
+    	reservationChild.close()
+    }
+
+    reservationChild = window.open('/popup/resv-pop?category_id='+(category_id ? category_id : '')+'&upper_id='+(upper_id ? upper_id : ''),'_blank','width=700, height=950, toolbar=no, menubar=no, scrollbars=yes, resizable=yes');
+}
+
 //날짜포맷
 Date.prototype.format = function(f) {
     if (!this.valueOf()) return " ";
@@ -53,4 +62,24 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 //null or undefined To String
 function nullToStr(str){
 	return str ? str : '';
+}
+
+//object를 키 이름으로 정렬하여 반환
+function sortObject(o) {
+    var sorted = {},
+    key, a = [];
+
+    // 키이름을 추출하여 배열에 집어넣음
+    for (key in o) {
+        if (o.hasOwnProperty(key)) a.push(key);
+    }
+
+    // 키이름 배열을 정렬
+    a.sort();
+    
+    // 정렬된 키이름 배열을 이용하여 object 재구성
+    for (key=0; key<a.length; key++) {
+        sorted[a[key]] = o[a[key]];
+    }
+    return sorted;
 }

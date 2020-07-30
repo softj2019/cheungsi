@@ -20,11 +20,18 @@
 		<collection column="res_no" property="res_options" select="getOptions"></collection>
 	</resultMap>
 	<select id="getReservationCount" parameterType="hashmap" resultType="int">
-		select count(*)
+		select ifnull(count(*),0)
 		from reservation A
 		where 1=1
 		<if test="res_name != null and res_name != ''">and A.res_name like concat('%',#{res_name},'%')</if>
 		<if test="res_date != null and res_date != ''">and date_format(A.res_date,'%Y-%m-%d') = #{res_date}</if>
+	</select>
+	<select id="getDateCategoryQuantityTotal" parameterType="hashmap" resultType="int">
+		select ifnull(sum(A.res_quantity),0) as total
+		from reservation A
+		where 1=1
+		and date_format(A.res_date,'%Y-%m-%d') = #{res_date}
+		and A.category_id = #{category_id}
 	</select>
 	<select id="getReservations" resultMap="reservationMap" parameterType="hashmap">
 		SELECT date_format(A.res_date,'%Y-%m-%d %H:%i') res_date,
@@ -74,7 +81,8 @@
 			res_payment,
 			res_pay_method,
 			res_checkin_yn,
-			remark
+			remark,
+			res_sex
     	)values(
    	]]>
    	<if test="res_id != null and res_id !=''">#{res_id},</if>
@@ -88,7 +96,8 @@
 			#{res_payment},
 			#{res_pay_method},
 			#{res_checkin_yn},
-			#{remark}
+			#{remark},
+			#{res_sex}
     	)
     	on duplicate KEY update
     	
@@ -102,7 +111,8 @@
 		res_payment = #{res_payment},
 		res_pay_method = #{res_pay_method},
 		res_checkin_yn = #{res_checkin_yn},
-		remark = #{remark}
+		remark = #{remark},
+		res_sex = #{res_sex}
    	]]>
     </insert>
     <insert id="insertReservationOption" parameterType="hashmap">

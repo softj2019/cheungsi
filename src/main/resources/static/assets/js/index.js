@@ -77,13 +77,13 @@ function loadReservationTable() {
                             '<td rowspan="'+optionLen+'" class="td-ph">'+el.res_phone+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-w">'+el.res_pay_method+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-w">'+el.res_payment.toLocaleString('en')+'</td>' +
-                            '<td rowspan="'+optionLen+'" class="td-w">'+el.res_quantity+'</td>' +
+                            '<td rowspan="'+optionLen+'" class="td-w">'+(el.res_sex ? el.res_sex : '')+' '+el.res_quantity+'명</td>' +
                             '<td rowspan="'+optionLen+'" class="td-w">'+new Date(el.res_date).format("yyyy-MM-dd")+'</td>' +
                             '<td rowspan="'+optionLen+'" class="td-w toggleCheckinYn '+(el.res_checkin_yn == 'Y' ? 'bgBlue' : '')+'" data-id="'+el.res_id+'">'+el.res_checkin_yn+'</td>';
 				options.forEach(function(elSub, idx){
 					if(elSub){
 						html += '' +
-							'<td class="td-w">'+elSub.option_quantity+'</td>';
+							'<td class="td-w">'+(el.res_sex ? el.res_sex : '')+' '+elSub.option_quantity+'명</td>';
 						if(idx == 0){
 							var class_time = '';
 							if(new Date(elSub.option_hope_time).format("yyyyMMdd") == new Date(el.res_date).format("yyyyMMdd")){

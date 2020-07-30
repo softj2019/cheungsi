@@ -72,6 +72,16 @@ public class RestApiController {
 		return result;
 	}
 	
+	//카테고리추가
+		@RequestMapping("/updateCategory")
+		public Map<String, Object> updateCategory(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model) {
+			Map<String,Object> result = new HashMap<>();
+			
+			restApiService.updateCategory(params, result);
+			
+			return result;
+		}
+	
 	//카테고리삭제
 	@RequestMapping("/deleteCategory")
 	public Map<String, Object> deleteCategory(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model,ReservationVO reservationVO) {

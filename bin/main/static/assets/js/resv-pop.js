@@ -4,8 +4,12 @@ $(function(){
 	loadCategory1();
 	loadCategory2(1);
 	
+	$("input[name=res_date]").val(opener.$("input[name=res_date]").val());
 	res_id = new URLSearchParams(location.search).get('res_id');
+	category_id = new URLSearchParams(location.search).get('category_id');
+	upper_id = new URLSearchParams(location.search).get('upper_id');
 	if(res_id) loadDetail(res_id);
+	if(category_id && upper_id) selectCategory(category_id, upper_id);
 	/******************************************* listener start *******************************************/
 	$('.op-add').click(function(){
 		if($("tr.option_tr").length == 4) return;
@@ -117,11 +121,17 @@ $(function(){
     	
     	var formData = $("#reservationForm").serialize();
     	
+    	var key = $("select[name=category2]").val();
+    	formData += '&max_quantity='+parseInt(opener.$("td[category-id="+key+"]").children('span.quantity_max').text());
+    	
     	postCallAjax('/api/insertReservation', formData, function(data){
     		if(data.msg == 'success'){
 	    		window.opener.loadReservationTable();
 	    		self.close();
+    		}else if(data.msg == 'excess'){
+    			alert("선택한 날짜의 카테고리에 최대인원을 초과하였습니다.");
     		}else{
+    			
     			alert("ERROR");
     		}
     	});
@@ -177,7 +187,7 @@ $(function(){
     //셀렉트박스로돌아가기
     $(document).on('click',".option_pay_method_text_div i.arr-d",function(){
     	console.log(3)
-    	$(this).parent().siblings("select[name=option_pay_method]").val('네이버 강릉 서핑');
+    	$(this).parent().siblings("select[name=option_pay_method]").val('강릉 서핑');
     	$(this).parent().siblings("select[name=option_pay_method]").show();
 		$(this).parent().hide();
     });*/
@@ -222,13 +232,14 @@ function loadDetail(res_id){
 		setTimeout(function(){
 			$("select[name=category2]").val(detail.category2).trigger('change');
 		},50);
+		$("input[name=res_sex][value='"+detail.res_sex+"']").prop("checked",true);
 		$("input[name=res_name]").val(detail.res_name);
 		$("input[name=res_phone]").val(detail.res_phone);
 		$("input[name=res_quantity]").val(detail.res_quantity);
 		$("input[name=res_payment]").val(detail.res_payment);
-		if(detail.res_pay_method != '네이버 강릉 서핑' &&
-			detail.res_pay_method != '네이버 양양 서핑' &&
-			detail.res_pay_method != '네이버 게스트 하우스' &&
+		if(detail.res_pay_method != '강릉 서핑' &&
+			detail.res_pay_method != '양양 서핑' &&
+			detail.res_pay_method != '게스트 하우스' &&
 			detail.res_pay_method != '현금' &&
 			detail.res_pay_method != '카드' &&
 			detail.res_pay_method != '프립' &&
@@ -325,13 +336,6 @@ function loadDetail(res_id){
 
 //validate 확인
 function validateCheck() {
-	var key = $("select[name=category2]").val();
-	var cur_quantity = parseInt(opener.$("td[category-id="+key+"]").children('span.quantity_total').text()) + parseInt($("input[name=res_quantity]").val());
-	
-	if(parseInt(opener.$("td[category-id="+key+"]").children('span.quantity_max').text()) < cur_quantity){
-		alert("수량을 초과했습니다.");
-		return true;
-	}
 	if(!$("input[name=res_date]").val()){
 		alert("예약날짜를 입력하세요.");
 		$("input[name=res_date]").focus();
@@ -367,4 +371,14 @@ function validateCheck() {
 		alert("옵션 수량을 입력하세요.");
 		return true;
 	}
+}
+
+//카테고리 눌러서 팝업띄운경우 카테고리 자동선택
+function selectCategory(id, upper_id){
+	setTimeout(function(){
+		$("select[name=category1]").val(upper_id).trigger('change');
+		setTimeout(function(){
+			$("select[name=category2]").val(id).trigger('change');
+		},50);
+	},50);
 }

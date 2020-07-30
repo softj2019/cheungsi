@@ -13,22 +13,35 @@
             <section class="left-s">
                 <ul class="category-out">
                 	<li th:each="category1: ${category1List}">
-                		<a href="" th:value="${category1.category_id}" th:text="${category1.category_name}" th:attr="upper-id=${category1.category_upper_id}"></a>
+                		<a href="" th:value="${category1.category_id}" th:text="${category1.category_name}" th:attr="upper-id=${category1.category_upper_id}, category-name=${category1.category_name}"></a>
                 		<ul th:each="category2: ${category2List}">
-                            <li th:if="${category1.category_id == category2.category_upper_id}" th:value="${category2.category_id}" th:text="${category2.category_name+' ['+category2.category_max_quantity+'인]'}" th:attr="upper-id=${category2.category_upper_id}"></li>
+                            <li th:if="${category1.category_id == category2.category_upper_id}" th:value="${category2.category_id}" th:text="${category2.category_name+' ['+category2.category_max_quantity+'인]'}" th:attr="upper-id=${category2.category_upper_id}, max-quantity=${category2.category_max_quantity}, category-name=${category2.category_name}"></li>
                         </ul>
                 	</li>
                 </ul>
             </section>
             <section class="right-s">
-                <div>
-                    <select name="category_id" id="">
+                <div style="display: block !important;">
+                	<div>
+                		<h1>카테고리 추가/삭제</h1>
+                	</div>
+                    <select name="category_id" id="" class="mb100">
                         <option value="0">최상위분류</option>
                     </select>
                     <input type="text" class="input3" name="category_name" placeholder="분류명">
                     <input type="text" class="input3" name="category_max_quantity" placeholder="최대인원">
                     <button type="button" class="btn-blue" id="category_add_btn" onclick="addCategory()">추가</button>
                     <button type="button" class="btn-red" id="category_del_btn" onclick="delCategory()">삭제</button>
+                </div>
+                
+                <div style="display: block !important;" class="category-update-div">
+                	<div>
+                		<h1>선택한 카테고리 수정</h1>
+                	</div>
+                	<input type="hidden" class="input3" name="category_id2">
+                    <input type="text" class="input3" name="category_name2" placeholder="분류명">
+                    <input type="text" class="input3" id="category_max_quantity2" name="category_max_quantity2" placeholder="최대인원">
+                    <button type="button" class="btn-blue" onclick="updateCategory()">수정</button>
                 </div>
             </section>
         </div>

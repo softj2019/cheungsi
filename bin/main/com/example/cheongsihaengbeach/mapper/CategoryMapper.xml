@@ -21,6 +21,12 @@
     		<if test="category_max_quantity == null or category_max_quantity == ''">NULL</if>
     	)
     </insert>
+    <update id="updateCategory" parameterType="hashmap">
+    	update category set
+	    	category_name = #{category_name},
+	    	category_max_quantity = <if test="category_max_quantity != null and category_max_quantity != ''">#{category_max_quantity}</if><if test="category_max_quantity == null or category_max_quantity == ''">NULL</if>
+    	where category_id = #{category_id}
+    </update>
     <delete id="deleteCategory" parameterType="hashmap">
     	delete from category
     	where category_id = #{category_id}

@@ -40,14 +40,26 @@ public class RestApiService {
         
 		try {
 			if(params.get("res_id") != null && !params.get("res_id").equals("")) {
+				reservationMapper.deleteReservation(params);
 				reservationMapper.deleteReservationOption(params);
 			}
+			
 			String res_no = "RES-"+NumberGender.numberGen(10, 1);
 			params.put("res_no",res_no);
 			if(params.get("res_pay_method").equals("custom")) {
 				params.put("res_pay_method",params.get("res_pay_method_text"));
 			}
 			params.put("category_id", params.get("category2") != null && !params.get("category2").equals("") ? params.get("category2") : params.get("category1"));
+			int quantity_total = reservationMapper.getDateCategoryQuantityTotal(params);
+			int max_quantity = Integer.parseInt(params.get("max_quantity")+"");
+			int input_quantity = Integer.parseInt(params.get("res_quantity")+"");
+			
+			if(max_quantity < quantity_total + input_quantity) {
+				result.put("msg", "excess");
+				txManager.rollback(status);
+				return;
+			}
+			
 			reservationMapper.insertReservation(params);
 			
 			if(params.get("option_names") != null && !params.get("option_names").equals("")) {
@@ -132,6 +144,12 @@ public class RestApiService {
 	
 	public void insertCategory(Map<String,Object> params, Map<String,Object> result) {
 		categoryMapper.insertCategory(params);
+		
+		result.put("msg", "success");
+	}
+	
+	public void updateCategory(Map<String,Object> params, Map<String,Object> result) {
+		categoryMapper.updateCategory(params);
 		
 		result.put("msg", "success");
 	}
