@@ -94,8 +94,8 @@ function loadReservationTable() {
 			val.forEach(function(category, idx){
 				if(idx == 0){
 					html += '<tr>' +
-								'<td class="td-t1" rowspan="'+val.length+'">'+key+'</td>' +
-								'<td class="td-t1 category2-td" upper-id="'+category.category_upper_id+'" category-id="'+category.category_id+'">'+category.category_name+'<br><span>(</span><span class="quantity_max">'+category.category_max_quantity+'</span><span>인) / </span><span class="quantity_total">0</span></td>' +
+								'<td class="td-t1 '+(category.category_id == 91  ? 'bgyellow' : '')+'" rowspan="'+val.length+'">'+key+'</td>' +
+								'<td class="td-t1 category2-td '+(category.category_id == 91  ? 'bgyellow' : '')+'" upper-id="'+category.category_upper_id+'" category-id="'+category.category_id+'">'+category.category_name+'<br><span>(</span><span class="quantity_max">'+category.category_max_quantity+'</span><span>인) / </span><span class="quantity_total">0</span></td>' +
 								'<td>' +
 									'<table class="sub-in-table" category-id="'+category.category_id+'">' +
 						                '<tr>' +
@@ -163,7 +163,7 @@ function loadReservationTable() {
 			if(surfingClass){
 				var class_time = '';
 				if(new Date(surfingClass.option_hope_time).format("yyyyMMdd") != new Date(el.res_date).format("yyyyMMdd")){
-					class_time = new Date(surfingClass.option_hope_time).format("a/phh시")
+					class_time = new Date(surfingClass.option_hope_time).format("a/pHH시")
 				}
 
 				if(class_time){
@@ -289,13 +289,13 @@ function loadReservationTable() {
 						if(idx == 0){
 							var class_time = '';
 							if(new Date(elSub.option_hope_time).format("yyyyMMdd") == new Date(el.res_date).format("yyyyMMdd")){
-								class_time = new Date(elSub.option_hope_time).format("a/phh시")
+								class_time = new Date(elSub.option_hope_time).format("a/pHH시")
 
 								option_surfing_class_cnt += parseInt(elSub.option_quantity);
 								if(!option_surfing_class_cnt_obj[class_time]) option_surfing_class_cnt_obj[class_time] = parseInt(elSub.option_quantity);
 								else option_surfing_class_cnt_obj[class_time] += parseInt(elSub.option_quantity);
 							}else{
-								class_time = new Date(elSub.option_hope_time).format("익일 a/phh시")
+								class_time = new Date(elSub.option_hope_time).format("익일 a/pHH시")
 							}
 							html += '' +
 							'<td class="td-w">'+class_time+'</td>' +
@@ -340,8 +340,10 @@ function loadReservationTable() {
 		$("span.option_surfing_rental_cnt").text(option_surfing_rental_cnt.toLocaleString('en'));
 		$("span.option_party_cnt_m").text(option_party_cnt_m.toLocaleString('en'));
 		$("span.option_party_cnt_w").text(option_party_cnt_w.toLocaleString('en'));
+		$("span.option_party_cnt_t").text((option_party_cnt_w+option_party_cnt_m).toLocaleString('en'));
 		$("span.option_pub_cnt_m").text(option_pub_cnt_m.toLocaleString('en'));
 		$("span.option_pub_cnt_w").text(option_pub_cnt_w.toLocaleString('en'));
+		$("span.option_pub_cnt_t").text((option_pub_cnt_w+option_pub_cnt_m).toLocaleString('en'));
 		$("span.payment_ngs").text(payment_ngs.toLocaleString('en'));
 		$("span.payment_nys").text(payment_nys.toLocaleString('en'));
 		$("span.payment_ngh").text(payment_ngh.toLocaleString('en'));

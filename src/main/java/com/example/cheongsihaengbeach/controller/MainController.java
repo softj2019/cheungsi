@@ -70,7 +70,8 @@ public class MainController {
 			return "redirect:/dashboard";
 		}
 		
-		params.put("category_upper_id",'0');
+		params.put("not_waiting_list","1");
+		params.put("category_upper_id","0");
 		List<Map<String,Object>> category1List = categoryMapper.getCategorys(params);
         params.put("category_upper_id",null);
         List<Map<String,Object>> category2List = categoryMapper.getCategorys(params);

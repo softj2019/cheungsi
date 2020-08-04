@@ -87,9 +87,9 @@ function loadReservationTable() {
 						if(idx == 0){
 							var class_time = '';
 							if(new Date(elSub.option_hope_time).format("yyyyMMdd") == new Date(el.res_date).format("yyyyMMdd")){
-								class_time = new Date(elSub.option_hope_time).format("a/phh시")
+								class_time = new Date(elSub.option_hope_time).format("a/pHH시")
 							}else{
-								class_time = new Date(elSub.option_hope_time).format("익일 a/phh시")
+								class_time = new Date(elSub.option_hope_time).format("익일 a/pHH시")
 							}
 							html += '' +
 							'<td class="td-w">'+class_time+'</td>' +

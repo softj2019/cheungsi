@@ -96,7 +96,7 @@ public class RestApiController {
 	@RequestMapping("/getReservations")
 	public Map<String, Object> getReservations(@RequestParam HashMap<String,Object> params, HttpServletRequest req, HttpServletResponse res, HttpSession sess,ModelMap model, ReservationVO reservationVO) throws Exception{
 		Map<String,Object> result = new HashMap<>();
-		reservationVO.setDisplayRowCount(9999999);
+		reservationVO.setDisplayRowCount(99999999);
 		reservationVO.pageCalculate(restApiService.getReservationCount(params));
 		
 		params.put("rowStart", reservationVO.getRowStart());

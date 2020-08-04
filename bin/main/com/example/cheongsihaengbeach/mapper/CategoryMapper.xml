@@ -8,6 +8,7 @@
 		FROM category
 		where 1=1
 		<if test="category_upper_id != null and category_upper_id != ''">and category_upper_id = #{category_upper_id}</if>
+		<if test="not_waiting_list != null and not_waiting_list != ''">and category_id not in (90,91)</if>
     </select>
     <insert id="insertCategory" parameterType="hashmap">
     	insert into category(
@@ -37,7 +38,8 @@
 				(select category_name FROM category WHERE category_id = A.category_upper_id) AS category_upper_name
 		FROM category A
 		WHERE A.category_upper_id != 0
-		order by category_id asc
+		and (select category_id from category where category_id = A.category_upper_id) is not null
+		order by category_id in (90,91) asc, category_id asc
 	]]>
     </select>
 </mapper>

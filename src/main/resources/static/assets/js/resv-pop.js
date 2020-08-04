@@ -27,17 +27,17 @@ $(function(){
 			                '<option value="today10">오전10시</option>' +
 			                '<option value="today11">오전11시</option>' +
 			                '<option value="today12">오후12시</option>' +
-			                '<option value="today13">오후01시</option>' +
-			                '<option value="today14">오후02시</option>' +
-			                '<option value="today15">오후03시</option>' +
-			                '<option value="today16">오후04시</option>' +
+			                '<option value="today13">오후13시</option>' +
+			                '<option value="today14">오후14시</option>' +
+			                '<option value="today15">오후15시</option>' +
+			                '<option value="today16">오후16시</option>' +
 			                '<option value="tomorrow10">익일 오전10시</option>' +
 			                '<option value="tomorrow11">익일 오전11시</option>' +
 			                '<option value="tomorrow12">익일 오후12시</option>' +
-			                '<option value="tomorrow13">익일 오후01시</option>' +
-			                '<option value="tomorrow14">익일 오후02시</option>' +
-			                '<option value="tomorrow15">익일 오후03시</option>' +
-			                '<option value="tomorrow16">익일 오후04시</option>' +
+			                '<option value="tomorrow13">익일 오후13시</option>' +
+			                '<option value="tomorrow14">익일 오후14시</option>' +
+			                '<option value="tomorrow15">익일 오후15시</option>' +
+			                '<option value="tomorrow16">익일 오후16시</option>' +
 			            '</select>' +
 			        '</td>' +
 			        '<td>' +
@@ -68,17 +68,17 @@ $(function(){
     			        '<option value="today10">오전10시</option>' +
     			        '<option value="today11">오전11시</option>' +
     			        '<option value="today12">오후12시</option>' +
-    			        '<option value="today13">오후1시</option>' +
-    			        '<option value="today14">오후2시</option>' +
-    			        '<option value="today15">오후3시</option>' +
-    			        '<option value="today16">오후4시</option>' +
+    			        '<option value="today13">오후13시</option>' +
+    			        '<option value="today14">오후14시</option>' +
+    			        '<option value="today15">오후15시</option>' +
+    			        '<option value="today16">오후16시</option>' +
     			        '<option value="tomorrow10">익일 오전10시</option>' +
     			        '<option value="tomorrow11">익일 오전11시</option>' +
     			        '<option value="tomorrow12">익일 오후12시</option>' +
-    			        '<option value="tomorrow13">익일 오후1시</option>' +
-    			        '<option value="tomorrow14">익일 오후2시</option>' +
-    			        '<option value="tomorrow15">익일 오후3시</option>' +
-    			        '<option value="tomorrow16">익일 오후4시</option>' +
+    			        '<option value="tomorrow13">익일 오후13시</option>' +
+    			        '<option value="tomorrow14">익일 오후14시</option>' +
+    			        '<option value="tomorrow15">익일 오후15시</option>' +
+    			        '<option value="tomorrow16">익일 오후16시</option>' +
     			    '</select>';
     		break;
     	case '서핑렌탈':
@@ -262,26 +262,26 @@ function loadDetail(res_id){
 			case '서핑강습':
 				var class_time = '';
 				if(new Date(el.option_hope_time).format("yyyyMMdd") == new Date(detail.res_date).format("yyyyMMdd")){
-					class_time = new Date(el.option_hope_time).format("a/phh시")
+					class_time = new Date(el.option_hope_time).format("a/pHH시")
 				}else{
-					class_time = new Date(el.option_hope_time).format("익일 a/phh시")
+					class_time = new Date(el.option_hope_time).format("익일 a/pHH시")
 				}
 				console.log(class_time);
 				option_additional_html += '<select name="option_hope_time" id="option_hope_time">' +
 	    			        '<option value="today10" ' + (class_time == '오전10시' ? 'selected="selected"' : '') + '>오전10시</option>' +
 	    			        '<option value="today11" ' + (class_time == '오전11시' ? 'selected="selected"' : '') + '>오전11시</option>' +
 	    			        '<option value="today12" ' + (class_time == '오후12시' ? 'selected="selected"' : '') + '>오후12시</option>' +
-	    			        '<option value="today13" ' + (class_time == '오후01시' ? 'selected="selected"' : '') + '>오후01시</option>' +
-	    			        '<option value="today14" ' + (class_time == '오후02시' ? 'selected="selected"' : '') + '>오후02시</option>' +
-	    			        '<option value="today15" ' + (class_time == '오후03시' ? 'selected="selected"' : '') + '>오후03시</option>' +
-	    			        '<option value="today16" ' + (class_time == '오후04시' ? 'selected="selected"' : '') + '>오후04시</option>' +
+	    			        '<option value="today13" ' + (class_time == '오후13시' ? 'selected="selected"' : '') + '>오후13시</option>' +
+	    			        '<option value="today14" ' + (class_time == '오후14시' ? 'selected="selected"' : '') + '>오후14시</option>' +
+	    			        '<option value="today15" ' + (class_time == '오후15시' ? 'selected="selected"' : '') + '>오후15시</option>' +
+	    			        '<option value="today16" ' + (class_time == '오후16시' ? 'selected="selected"' : '') + '>오후16시</option>' +
 	    			        '<option value="tomorrow10" ' + (class_time == '익일 오전10시' ? 'selected="selected"' : '') + '>익일 오전10시</option>' +
 	    			        '<option value="tomorrow11" ' + (class_time == '익일 오전11시' ? 'selected="selected"' : '') + '>익일 오전11시</option>' +
 	    			        '<option value="tomorrow12" ' + (class_time == '익일 오후12시' ? 'selected="selected"' : '') + '>익일 오후12시</option>' +
-	    			        '<option value="tomorrow13" ' + (class_time == '익일 오후01시' ? 'selected="selected"' : '') + '>익일 오후01시</option>' +
-	    			        '<option value="tomorrow14" ' + (class_time == '익일 오후02시' ? 'selected="selected"' : '') + '>익일 오후02시</option>' +
-	    			        '<option value="tomorrow15" ' + (class_time == '익일 오후03시' ? 'selected="selected"' : '') + '>익일 오후03시</option>' +
-	    			        '<option value="tomorrow16" ' + (class_time == '익일 오후04시' ? 'selected="selected"' : '') + '>익일 오후04시</option>' +
+	    			        '<option value="tomorrow13" ' + (class_time == '익일 오후13시' ? 'selected="selected"' : '') + '>익일 오후13시</option>' +
+	    			        '<option value="tomorrow14" ' + (class_time == '익일 오후14시' ? 'selected="selected"' : '') + '>익일 오후14시</option>' +
+	    			        '<option value="tomorrow15" ' + (class_time == '익일 오후15시' ? 'selected="selected"' : '') + '>익일 오후15시</option>' +
+	    			        '<option value="tomorrow16" ' + (class_time == '익일 오후16시' ? 'selected="selected"' : '') + '>익일 오후16시</option>' +
 	    			    '</select>';
 	    		break;
 	    	case '서핑렌탈':

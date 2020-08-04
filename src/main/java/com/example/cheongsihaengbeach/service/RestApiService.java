@@ -51,7 +51,7 @@ public class RestApiService {
 			}
 			params.put("category_id", params.get("category2") != null && !params.get("category2").equals("") ? params.get("category2") : params.get("category1"));
 			int quantity_total = reservationMapper.getDateCategoryQuantityTotal(params);
-			int max_quantity = Integer.parseInt(params.get("max_quantity")+"");
+			int max_quantity = Integer.parseInt((params.get("max_quantity")+"").replace(",", ""));
 			int input_quantity = Integer.parseInt(params.get("res_quantity")+"");
 			
 			if(max_quantity < quantity_total + input_quantity) {
@@ -61,7 +61,7 @@ public class RestApiService {
 			}
 			
 			reservationMapper.insertReservation(params);
-			
+
 			if(params.get("option_names") != null && !params.get("option_names").equals("")) {
 				String[] option_names = ((String)params.get("option_names")).split(",",-1);
 				String[] option_quantitys = ((String)params.get("option_quantitys")).split(",",-1);

@@ -11,12 +11,12 @@
         <h1>서핑예약</h1>
         <div>
             <section class="search-box mb20 mt20">
-              <form action="" method="get">
+              <form action="" method="get" onsubmit="return false;">
                 <div class="date">
                     <input type="text" id="from_date" name="res_date" class="date_pick input2" placeholder="예약일"> 
                     <i class="cal1"></i>
                 </div>
-                 <button type="button" class="btn-w" onclick="searchTable()">검색</button>
+                 <button type="submit" class="btn-w" onclick="searchTable()">검색</button>
                  <button type="button" class="btn-blue" onclick="reservationPopup()">예약등록</button>
               </form>
             </section>
@@ -71,13 +71,15 @@
 	                	<col width="10%">
 	                	<col width="10%">
 	                	<col width="10%">
-	                	<col width="5%">
-	                	<col width="5%">
+	                	<col width="3%">
+	                	<col width="3%">
+	                	<col width="4%">
 	                	<col width="10%">
-	                	<col width="5%">
-	                	<col width="5%">
+	                	<col width="3%">
+	                	<col width="3%">
+	                	<col width="4%">
 	                </colgroup>
-                	<tbody class="table-head">
+                	<tbody class="table-head mb10">
 	                	<tr>
 	                		<td>기본옵션</td>
 	                		<td class="fw100"><span class="option_default_cnt"></span>명</td>
@@ -86,11 +88,13 @@
 	                		<td>서핑렌탈</td>
 	                		<td class="fw100"><span class="option_surfing_rental_cnt"></span>명</td>
 	                		<td>파티</td>
-	                		<td class="fw100">남<span class="option_party_cnt_m"></span>명</td>
-	                		<td class="fw100">여<span class="option_party_cnt_w"></span>명</td>
+	                		<td class="fw100">남 <span class="option_party_cnt_m"></span>명</td>
+	                		<td class="fw100">여 <span class="option_party_cnt_w"></span>명</td>
+	                		<td class="fw100">총 <span class="option_party_cnt_t"></span>명</td>
 	                		<td>펍</td>
-	                		<td class="fw100">남<span class="option_pub_cnt_m"></span>명</td>
-	                		<td class="fw100">여<span class="option_pub_cnt_w"></span>명</td>
+	                		<td class="fw100">남 <span class="option_pub_cnt_m"></span>명</td>
+	                		<td class="fw100">여 <span class="option_pub_cnt_w"></span>명</td>
+	                		<td class="fw100">총 <span class="option_pub_cnt_t"></span>명</td>
 	                	</tr>
                 	</tbody>
                 </table>
